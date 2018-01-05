@@ -1,0 +1,7 @@
+
+.DS_Store
+cmake-build-debug
+.idea
+*.txt
+q.cpp
+test
