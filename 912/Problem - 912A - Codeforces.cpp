@@ -22,6 +22,6 @@ int main(int argc, char const *argv[])
     if (rB < 0)
         rB = 0;
     result = rA + rB;
-    cout << result;
+    cout << result << endl;
     return 0;
 }
