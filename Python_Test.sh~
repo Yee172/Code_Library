@@ -1,3 +1,9 @@
 folderpath=$(cd `dirname $0`; pwd)
 cd $folderpath
-python3 q.py
+test=1
+while true
+do
+	python3 q.py
+	printf %s%02d%s'\n' "-----------test: " $test "-----------"
+	test=$[$test+1]
+done

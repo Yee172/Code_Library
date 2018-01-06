@@ -1,0 +1,11 @@
+folderpath=$(cd `dirname $0`; pwd)
+cd $folderpath
+g++ -o test q.cpp
+echo -----------[test: 00]-----------
+test=1
+while true
+do
+	./test
+	printf %s%02d%s'\n' "-----------[test: " $test "]-----------"
+	test=$[$test+1]
+done
