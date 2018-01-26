@@ -1,0 +1,8 @@
+read = lambda: map(int, input().split())
+t, bx = read()
+X = list(read())
+x = sum(X[_] * bx ** (t - 1 - _) for _ in range(t))
+t, by = read()
+Y = list(read())
+y = sum(Y[_] * by ** (t - 1 - _) for _ in range(t))
+print('<' if x < y else '>' if x > y else '=')
