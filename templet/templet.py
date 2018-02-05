@@ -2,8 +2,13 @@
 # -*- coding: utf-8 -*-
 
 
-pt = lambda *s, end='\n': print(*s, end=end, flush=True)
-read = lambda: map(int, input().split())
+'''
+pt -> print
+rd -> read
+'''
+
+pt = lambda *s, **t: print(*s, **t, flush=True)
+rd = lambda: map(int, input().split())
 
 
 def fast_exp_mod(base, exponent, module):
