@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
+pt = lambda *s, end='\n': print(*s, end=end, flush=True)
 read = lambda: map(int, input().split())
 
 
