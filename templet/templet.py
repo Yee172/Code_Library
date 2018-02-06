@@ -2,38 +2,69 @@
 # -*- coding: utf-8 -*-
 
 
-'''
+"""
+a -> args
+k -> kwargs
 pt -> print
 rd -> read
-'''
-
-pt = lambda *s, **t: print(*s, **t, flush=True)
+"""
+pt = lambda *a, **k: print(*a, **k, flush=True)
 rd = lambda: map(int, input().split())
 
 
-def fast_exp_mod(base, exponent, module):
-    result = 1
-    while exponent != 0:
-        if (exponent & 1) is 1:
-            result = (result * base) % module
-        exponent >>= 1
-        base = (base * base) % module
-    return result
+'''
+fem -> fast_exp_mod
+b -> base
+e -> exponent
+m -> module
+r -> result
+'''
+def fem(b, e, m):
+    r = 1
+    while e is not 0:
+        if (e & 1) is 1:
+            r = (r * b) % m
+        e >>= 1
+        b = (b * b) % m
+    return r
 
 
-def generate_first_prime(lower, upper):
-    if upper < lower:
+'''
+gfp -> generate_first_prime
+l -> left  -> lower
+r -> right -> upper
+n -> num
+'''
+def gfp(l, r):
+    if r < l:
         return -1
-    if lower is 2:
+    if l is 2:
         return 2
-    lower = lower + 1 if lower & 1 is 0 else lower
-    for num in range(lower, upper + 1, 2):
-        for i in range(2, num):
-            if (num % i) is 0:
+    l = l + 1 if l & 1 is 0 else l
+    for n in range(l, r + 1, 2):
+        for i in range(2, n):
+            if (n % i) is 0:
                 break
         else:
-            return num
+            return n
     return -1
+
+
+'''
+cb -> change_10base_to_base
+   int -> string
+ct -> change_base_to_10base # t for ten
+   string -> int
+CR -> CHARS
+n -> num
+s -> string
+b -> base
+'''
+CR = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
+def cb(n, b):
+    return cb(n // b, b) + CR[n % b] if n else ''
+def ct(s, b):
+    return sum(CR.index(s[i]) * (b ** (len(s) - i - 1)) for i in range(len(s) - 1, -1, -1))
 
 
 class Tree(object):
@@ -72,6 +103,7 @@ class Tree(object):
             return self.right.query(x, y)
         else:
             return self.left.query(x, mid) + self.right.query(mid + 1, y)
+
 
 class FenwickTree(object):
     """Implementation of Fenwick Tree (a.k.a Binary Indexed Tree). [v1.0]
