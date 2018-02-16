@@ -1,31 +1,46 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-
-
+inf = 0x3f3f3f3f3f3f3f3f
 """
+'''
+Timer for testing
+'''
+import contextlib
+import datetime as dt
+@contextlib.contextmanager
+def timer():
+    start = dt.datetime.now()
+    yield
+    end = dt.datetime.now()
+    print(end - start)
+"""
+
+
+'''
 a -> args
 k -> kwargs
 pt -> print
 rd -> read
-"""
+gcd -> greatest common divisor
+'''
 pt = lambda *a, **k: print(*a, **k, flush=True)
 rd = lambda: map(int, input().split())
+gcd = lambda a, b: gcd(b, a % b) if b else a
 
 
 '''
-fem -> fast_exp_mod
+fpm -> fast_power_mod
 b -> base
 e -> exponent
 m -> module
 r -> result
 '''
-def fem(b, e, m):
+def fpm(b, e, m):
     r = 1
-    while e is not 0:
-        if (e & 1) is 1:
-            r = (r * b) % m
+    while e:
+        if e & 1: r = r * b % m
         e >>= 1
-        b = (b * b) % m
+        b = b * b % m
     return r
 
 
@@ -36,18 +51,29 @@ r -> right -> upper
 n -> num
 '''
 def gfp(l, r):
-    if r < l:
-        return -1
-    if l is 2:
-        return 2
+    if r < l: return -1
+    if l is 2: return 2
     l = l + 1 if l & 1 is 0 else l
     for n in range(l, r + 1, 2):
-        for i in range(2, n):
-            if (n % i) is 0:
-                break
-        else:
-            return n
+        for i in range(3, n, 2):
+            if n % i is 0: break
+        else: return n
     return -1
+
+
+'''
+npp -> number++
+a -> number in array form
+'''
+number = [0] * 100
+def npp(a):
+    # if a[-1]: return
+    a[0] += 1
+    i = 0
+    while a[i] > 9:
+        a[i] = 0
+        i += 1
+        a[i] += 1
 
 
 '''
