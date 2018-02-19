@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 inf = 0x3f3f3f3f3f3f3f3f
-mod = 0x3b9aca07
+mod = 1000000007
+mod2inv = 500000004
 """
 '''
 Timer for testing
