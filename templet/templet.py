@@ -28,6 +28,7 @@ gcd -> greatest common divisor
 pt = lambda *a, **k: print(*a, **k, flush=True)
 rd = lambda: map(int, input().split())
 gcd = lambda a, b: gcd(b, a % b) if b else a
+from math import gcd
 
 
 '''
