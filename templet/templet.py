@@ -18,6 +18,17 @@ def timer():
 """
 
 
+"""
+'''
+The way to get a series of inverse numbers under module begin with 1
+'''
+n = 100005
+inv = [0, 1] + [0] * (n - 1)
+for i in range(2, n + 1):
+    inv[i] = (mod - mod // i) * inv[mod % i] % mod
+"""
+
+
 '''
 a -> args
 k -> kwargs
