@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 inf = 0x3f3f3f3f3f3f3f3f
-mod = 1000000007
+M = mod = 1000000007
 mod2inv = 500000004
 """
 '''
@@ -10,10 +10,11 @@ Timer for testing
 import contextlib
 import datetime as dt
 @contextlib.contextmanager
-def timer():
+def timer(s=''):
     start = dt.datetime.now()
     yield
     end = dt.datetime.now()
+    if s: print(s + ' : ', end='')
     print(end - start)
 """
 
@@ -23,10 +24,17 @@ def timer():
 The way to get a series of inverse numbers under module begin with 1
 '''
 n = 100005
+M = 1000000007
 inv = [0, 1] + [0] * (n - 1)
 for i in range(2, n + 1):
     inv[i] = (mod - mod // i) * inv[mod % i] % mod
 """
+'''
+Two ways to get single inverse number without generating a table
+'''
+inv = lambda x: pow(x, M - 2, M)
+inv = lambda x: (M - M // x) * inv(M % x) % M if x - 1 else 1
+
 
 
 '''
