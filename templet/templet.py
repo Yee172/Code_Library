@@ -16,7 +16,29 @@ def timer(s=''):
     end = dt.datetime.now()
     if s: print(s + ' : ', end='')
     print(end - start)
+usage:
+with timer():
+    pass
+
+import time 
+def cal_time(func):
+    def wrapper(*args, **kwargs):
+        t1 = time.time()
+        result = func(*args, **kwargs)
+        t2 = time.time()
+        print("running time:",func.__name__, t2 - t1)
+        return result
+    return wrapper
+usage:
+@cal_time
+pass
 """
+
+
+'''
+import sys
+for line in sys.stdin:
+'''
 
 
 """
@@ -64,23 +86,69 @@ def fpm(b, e, m):
         e >>= 1
         b = b * b % m
     return r
+# pow(b, e, m)
 
 
 '''
-gfp -> generate_first_prime
+gfp -> generate_first_factor
 l -> left  -> lower
 r -> right -> upper
 n -> num
 '''
-def gfp(l, r):
+def gff(l, r):
     if r < l: return -1
     if l is 2: return 2
     l = l + 1 if l & 1 is 0 else l
     for n in range(l, r + 1, 2):
-        for i in range(3, n, 2):
+        for i in range(3, int(n ** 0.5), 2):
             if n % i is 0: break
         else: return n
     return -1
+
+
+'''
+gf -> generate_factors
+gff -> generate_factors_fully
+'''
+def gf(n):
+    d = 2
+    while d * d <= n:
+        f = 1
+        while n % d is 0:
+            if f:
+                yield d
+            f = 0
+            n //= d
+        d += 1
+    if n > 1:
+        yield n
+
+
+def gff(n):
+    d = 2
+    while d * d <= n:
+        while n % d is 0:
+            yield d
+            n //= d
+        d += 1
+    if n > 1:
+        yield n
+
+
+'''
+ip -> is_prime
+'''
+def ip(n):
+    if n in [2, 3]:
+        return 1
+    if n % 6 not in [1, 5]:
+        return 0
+    i = 5
+    while i * i <= n:
+        if not min(n % i, n % (i + 2)):
+            return 0
+        i += 6
+    return 1
 
 
 '''
@@ -99,6 +167,27 @@ def npp(a):
 
 
 '''
+bs -> binary_search
+find the index of the left insertion position of the selected value
+'''
+def bs(a, v):
+    l, r = 0, len(a) - 1
+    while l < r:
+        m = l + (r - l + 1 >> 1)
+        t = a[m]
+        if t == v: return m
+        elif t < v: l = m
+        else r = m - 1
+# import bisect
+# bi = bisect.insort
+# bil = bisect.insort_left
+# bir = bisect.insort_right
+# bs = bisect.bisect
+# bsl = bisect.bisect_left
+# bsr = bisect.bisect_right
+
+
+'''
 cb -> change_10base_to_base
    int -> string
 ct -> change_base_to_10base # t for ten
@@ -113,6 +202,10 @@ def cb(n, b):
     return cb(n // b, b) + CR[n % b] if n else ''
 def ct(s, b):
     return sum(CR.index(s[i]) * (b ** (len(s) - i - 1)) for i in range(len(s) - 1, -1, -1))
+
+
+f = lambda c: ord(c) - 97
+g = lambda x: chr(97 + x)
 
 
 class Tree(object):
@@ -187,3 +280,128 @@ class FenwickTree(object):
         while idx <= len(self._data):
             self._data[idx - 1] += val
             idx += idx & -idx
+
+class vector:
+    def __init__(self, _x = 0, _y = 0):
+        self.x = _x
+        self.y = _y
+    def len(self):
+        return sqrt(self.x ** 2 + self.y ** 2)
+    def len_sq(self):
+        return self.x ** 2 + self.y ** 2
+    def __mul__(self, other):
+        if (type(self) == type(other)):
+            return self.x * other.x + self.y * other.y
+        return vector(self.x * other, self.y * other)
+    def __mod__(self, other):
+        return self.x * other.y - self.y * other.x
+    def normed(self):
+        length = self.len()
+        return vector(self.x / length, self.y / length)
+    def normate(self):
+        self = self.normed()
+    def __str__(self):
+        return "(" + str(self.x) + ", " + str(self.y) + ")"
+    def __add__(self, other):
+        return vector(self.x + other.x, self.y + other.y);
+    def __sub__(self, other):
+        return vector(self.x - other.x, self.y - other.y);
+    def __eq__(self, other):
+        return self.x == other.x and self.y == other.y
+    def rot(self):
+        return vector(self.y, -self.x)
+
+class line:
+    def __init__(self, a = 0, b = 0, c = 0):
+        self.a = a
+        self.b = b
+        self.c = c
+    def intersect(self, other):
+        d = self.a * other.b - self.b * other.a
+        dx = self.c * other.b - self.b * other.c
+        dy = self.a * other.c - self.c * other.a
+        return vector(dx / d, dy / d)
+    def fake(self, other):
+        d = self.a * other.b - self.b * other.a
+        return d
+    def __str__(self):
+        return str(self.a) + "*x + " + str(self.b) + "*y = " + str(self.c)
+
+def line_pt(A, B):
+    d = (A - B).rot()
+    return line(d.x, d.y, d * A)
+
+class circle:
+    def __init__(self, O = vector(0, 0), r = 0):
+        self.O = O
+        self.r = r
+    def intersect(self, other):
+        O1 = self.O
+        O2 = other.O
+        r1 = self.r
+        r2 = other.r
+        if (O1 == O2):
+            return []
+        if ((O1 - O2).len_sq() > r1 ** 2 + r2 ** 2 + 2 * r1 * r2):
+            return []
+        rad_line = line(2 * (O2.x - O1.x), 2 * (O2.y - O1.y), r1 ** 2 - O1.len_sq() - r2 ** 2 + O2.len_sq())
+        central = line_pt(O1, O2)
+        M = rad_line.intersect(central)
+        # print(M)
+        if ((O1 - O2).len_sq() == r1 ** 2 + r2 ** 2 + 2 * r1 * r2):
+            return [M]
+        d = (O2 - O1).normed().rot()
+        if (r1 ** 2 - (O1 - M).len_sq() < 0):
+            return []
+        d = d * (sqrt(r1 ** 2 - (O1 - M).len_sq()))
+        return [M + d, M - d]
+    def fake(self, other):
+        O1 = self.O
+        O2 = other.O
+        r1 = self.r
+        r2 = other.r
+        if (O1 == O2):
+            return 1
+        if ((O1 - O2).len_sq() > r1 ** 2 + r2 ** 2 + 2 * r1 * r2):
+            return 1
+        rad_line = line(2 * (O2.x - O1.x), 2 * (O2.y - O1.y), r1 ** 2 - O1.len_sq() - r2 ** 2 + O2.len_sq())
+        central = line_pt(O1, O2)
+        return rad_line.fake(central)
+
+class DSet:
+    def __init__(self, n):
+        self.parents = [-1 for i in range(n)]
+        self.rank = [0 for i in range(n)]
+
+    def find(self, n):
+        if self.parents[n] is -1:
+            return n
+        ret = self.find(self.parents[n])
+        self.parents[n] = ret
+        return ret
+
+    def union(self, a, b):
+        if a is -1 or b is -1:
+            return False
+        x, y = self.find(a), self.find(b)
+        if self.find(a) == self.find(b) and x is not -1:
+            return False
+        if self.rank[x] == self.rank[y]:
+            self.parents[x] = y
+            self.rank[x] = self.rank[y] = self.rank[x] + 1
+        elif self.rank[x] > self.rank[y]:
+            self.parents[y] = x
+            self.rank[y] = self.rank[x]
+        else:
+            self.parents[x] = y
+            self.rank[x] = self.rank[y]
+        return True
+
+uf = [i for i in range(len(s))]
+
+def find(uf,i):
+    p = uf[i]
+    return p if i==p else find(uf,p)
+
+def union(uf,i,j):
+    uf[find(uf,i)] = find(uf,j)
