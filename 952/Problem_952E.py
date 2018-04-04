@@ -1,0 +1,1 @@
+print((lambda x, y: sum(1 for i in range(15) if i ** 2 / 2 < x or i ** 2 + 1 >> 1 < y))(*((lambda n, x: sorted([n - x, x]))(*(lambda n: [n, sum(input()[-4] == 'h' for i in range(n))])(int(input()))))))
