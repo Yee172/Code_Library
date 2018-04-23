@@ -56,6 +56,7 @@ using namespace std;
 #define fi first
 #define se second
 typedef long long ll;
+typedef unsigned long long ull;
 typedef vector<int> VI;
 typedef pair<int,int> PII;
 const ll mod = 1000000007;
@@ -63,6 +64,8 @@ const ll mod2inv = 500000004;
 const ll inf = 0x3f3f3f3f3f3f3f3f;
 ll gcd(ll a, ll b) {return b ? gcd(b, a % b) : a;}
 ll powmod(ll a,ll b) {ll r = 1; a %= mod; for(; b; b >>= 1) {if (b & 1) r = r * a % mod; a = a * a % mod;} return r;}
+ll inv(ll x) {if (x == 1) return 1; else return (mod - mod / x) * inv(mod % x) % mod;}
+ll inv(ll x) {return powmod(x, mod - 2);}
 const ll MAXN = 1000005;
 
 
@@ -73,7 +76,36 @@ int main()
     return 0;
 }
 
+int is_prime(ll n)
+{
+    if (n == 2 || n == 3) return 1;
+    ll remain = n % 6;
+    if (remain != 1 && remain != 5) return 0;
+    ll i = 5;
+    while (i * i <= n)
+    {
+        if (!min(n % i, n % (i + 2))) return 0;
+        i += 6;
+    }
+    return 1;
+}
 
+map<ull, ull> generate_factors(ull n)
+{
+    map<ull, ull> factors;
+    ull f = 2;
+    while (f * f <= n)
+    {
+        while (n % f == 0)
+        {
+            factors[f]++;
+            n /= f;
+        }
+        f++;
+    }
+    if (n > 1) factors[n]++;
+    return factors;
+}
 
 int getf(int x) {return fa[x] == x ? x : fa[x] = getf(fa[x]);}
 
