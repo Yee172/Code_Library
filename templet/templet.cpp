@@ -55,6 +55,7 @@ using namespace std;
 #define mp make_pair
 #define fi first
 #define se second
+#define square(x) ((x) * (x))
 typedef long long ll;
 typedef unsigned long long ull;
 typedef vector<int> VI;
@@ -63,6 +64,7 @@ const ll mod = 1000000007;
 const ll mod2inv = 500000004;
 const ll inf = 0x3f3f3f3f3f3f3f3f;
 ll gcd(ll a, ll b) {return b ? gcd(b, a % b) : a;}
+ll power(ll a,ll b) {ll r = 1; for(; b; b >>= 1) {if (b & 1) r = r * a; a = a * a;} return r;}
 ll powmod(ll a,ll b) {ll r = 1; a %= mod; for(; b; b >>= 1) {if (b & 1) r = r * a % mod; a = a * a % mod;} return r;}
 ll inv(ll x) {if (x == 1) return 1; else return (mod - mod / x) * inv(mod % x) % mod;}
 ll inv(ll x) {return powmod(x, mod - 2);}
@@ -74,6 +76,21 @@ int main()
     FAST;
 
     return 0;
+}
+
+vector<ll> prime;
+bool vis[MAXN];
+void euler_sieve()
+{
+    for (ll i = 2; i < MAXN; i++)
+    {
+        if (!vis[i]) prime.push_back(i);
+        for (vector<ll>::iterator pr = prime.begin(); pr != prime.end(), i * *pr < MAXN; pr++)
+        {
+            vis[i * *pr] = 1;
+            if (i % *pr == 0) break;
+        }
+    }
 }
 
 int is_prime(ll n)
