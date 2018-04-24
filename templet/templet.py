@@ -38,6 +38,20 @@ pass
 '''
 import sys
 for line in sys.stdin:
+rd = lambda: next(sys.stdin, '').strip()
+'''
+
+
+'''
+import sys
+sys.setrecursionlimit(10 ** 6)
+'''
+
+
+'''
+import sys
+if locals()['__file__'][-2:] == 'py':
+    sys.stdin = open('in.txt', 'r')
 '''
 
 
@@ -161,7 +175,6 @@ Stirling(n, m)
 '''
 M = 0x3b9aca07
 MAXN = 200005
-inv = lambda x: (M - M // x) * inv(M % x) % M if x - 1 else 1
 modinv = [0, 1]
 for i in range(2, MAXN):
     modinv.append((M - M // i) * modinv[M % i] % M)
