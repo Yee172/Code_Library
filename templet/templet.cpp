@@ -56,6 +56,7 @@ using namespace std;
 #define fi first
 #define se second
 #define square(x) ((x) * (x))
+#define summation(x, y) (((x) - (y) + 1) * ((x) + (y)) / 2)
 typedef long long ll;
 typedef unsigned long long ull;
 typedef vector<int> VI;
