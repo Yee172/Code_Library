@@ -36,6 +36,13 @@ pass
 
 
 '''
+from sys import stdin
+rl = lambda l: tuple(map(int, l.split()))
+array = list(map(rl, stdin.readlines()))
+'''
+
+
+'''
 import sys
 for line in sys.stdin:
 rd = lambda: next(sys.stdin, '').strip()
@@ -247,32 +254,36 @@ f = lambda c: ord(c) - 97
 g = lambda x: chr(97 + x)
 
 
-class matrix22:
-    def __init__(self, x11, x12, x21, x22):
-        self.x11 = x11
-        self.x12 = x12
-        self.x21 = x21
-        self.x22 = x22
+class Matrix():
+    mod = 0x3b9aca07
 
-    def __mul__(self, matrix):
-        return matrix22(self.x11 * matrix.x11 + self.x12 * matrix.x21,
-                        self.x11 * matrix.x12 + self.x12 * matrix.x22,
-                        self.x21 * matrix.x11 + self.x22 * matrix.x21,
-                        self.x21 * matrix.x12 + self.x22 * matrix.x22)
+    def __init__(self, n):
+        self.n = n
+        self.a = [[0] * n for _ in range(n)]
 
-    def __mod__(self, m):
-        return matrix22(self.x11 % m,
-                        self.x12 % m,
-                        self.x21 % m,
-                        self.x22 % m)
+    def __mul__(self, b):
+        res = Matrix(self.n)
+        for i in range(self.n):
+            for j in range(self.n):
+                for k in range(self.n):
+                    res.a[i][j] += self.a[i][k] * b.a[k][j] % Matrix.mod
+                    res.a[i][j] %= Matrix.mod
+        return res
 
-    def fpm(self, b, e, m):
-        r = matrix22(1, 0, 0, 1)
+    def __pow__(self, e):
+        res = Matrix(self.n)
+        for i in range(self.n):
+            res.a[i][i] = 1
+        tmp = self
         while e:
-            if e & 1: r = r * b % m
+            if e & 1:
+                res = res * tmp
             e >>= 1
-            b = b * b % m
-        return r
+            tmp = tmp * tmp
+        return res
+
+    def __str__(self):
+        return str(self.a)
 
 
 class Tree(object):
