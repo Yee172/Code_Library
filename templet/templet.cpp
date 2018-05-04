@@ -108,10 +108,10 @@ int is_prime(ll n)
     return 1;
 }
 
-map<ull, ull> generate_factors(ull n)
+map<ll, ll> generate_factors(ll n)
 {
-    map<ull, ull> factors;
-    ull f = 2;
+    map<ll, ll> factors;
+    ll f = 2;
     while (f * f <= n)
     {
         while (n % f == 0)
