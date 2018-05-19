@@ -1,4 +1,4 @@
-n = int(input())
+input()
 r = []
 for x in list(map(int, input().split()))[::-1]:
     if not x in r:
