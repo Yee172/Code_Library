@@ -94,6 +94,28 @@ void euler_sieve()
     }
 }
 
+vector<ll> prime;
+bool vis[MAXN];
+ll phi[MAXN];
+void euler_function_sieve()
+{
+    phi[1] = 1;
+    for (ll i = 2; i < MAXN; i++)
+    {
+        if (!vis[i]) prime.push_back(i), phi[i] = i - 1;
+        for (vector<ll>::iterator pr = prime.begin(); pr != prime.end(), i * *pr < MAXN; pr++)
+        {
+            vis[i * *pr] = 1;
+            if (i % *pr == 0)
+            {
+                phi[i * *pr] = phi[i] * *pr;
+                break;
+            }
+            else phi[i * *pr] = phi[i] * (*pr - 1);
+        }
+    }
+}
+
 int is_prime(ll n)
 {
     if (n == 2 || n == 3) return 1;
