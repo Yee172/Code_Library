@@ -336,6 +336,7 @@ class Convex_polygon():
         self.dis = None
         self.base_ang = 0
         self.ang = None
+        self.area = None
         self.pin = [0, 1]
     def add(self, pt):
         self.points.append(pt)
@@ -343,18 +344,22 @@ class Convex_polygon():
         self.update_core()
         self.update_dis()
         self.update_ang()
-    def cal_core_of_triangle(self, i, j, k):
+    def get_double_area(self, i, j, k):
         s = (self.points[j].x - self.points[i].x) * (self.points[k].y - self.points[i].y)
         s -= (self.points[j].y - self.points[i].y) * (self.points[k].x - self.points[i].x)
+        return s
+    def cal_core_of_triangle(self, i, j, k):
+        s = self.get_double_area(i, j, k)
         return s, (self.points[i] + self.points[j] + self.points[k]) / 3 * s
     def update_core(self):
         self.core = Point(0, 0)
         s = 0
-        for i in range(2, len(P.points)):
+        for i in range(2, len(self.points)):
             det_s, det_core = self.cal_core_of_triangle(0, i, i - 1)
             self.core += det_core
             s += det_s
         self.core /= s
+        self.area = abs(s) / 2
     def update_dis(self):
         self.dis = []
         for pt in self.points:
@@ -371,6 +376,7 @@ class Convex_polygon():
                           'dis: ' + str(self.dis),
                           'base_ang ' + str(self.base_ang),
                           'ang ' + str(self.ang),
+                          'area ' + str(self.area),
                           'pin ' + str(self.pin)))
 
 
@@ -754,3 +760,132 @@ def find(uf,i):
 
 def union(uf,i,j):
     uf[find(uf,i)] = find(uf,j)
+
+class KMP:
+    def getnext(self,needle):
+        needleLen=len(needle)
+        next=[-1]*needleLen
+        i,k=0,-1
+        while i<needleLen-1:
+            if k==-1 or needle[i]==needle[k]:
+                i += 1
+                k += 1
+                if needle[i]==needle[k]:
+                    next[i]=next[k]
+                else:
+                    next[I]=k
+            else:
+                k=next[k]
+
+        return next
+
+    def strStr(self, haystack, needle):
+        """
+        :type haystack: str
+        :type needle: str
+        :rtype: int
+        """
+        if len(needle)<1:
+            return 0
+        if len(haystack)<1:
+            return -1
+
+        needleLen = len(needle)
+        haystackLen=len(haystack)
+        next=self.getnext(needle)
+        i,j=0,0
+        while i<haystackLen and j<needleLen:
+            if j==-1 or haystack[i]==needle[j]:
+                I+=1
+                j+=1
+            else:
+                j=next[j]
+
+        if j==needleLen:
+            return i-j
+        return -1
+
+def ConsecutiveLCS(self,s1,s2):
+    s1Len=len(s1)
+    s2Len=len(s2)
+    arr=[[0]*(s2Len+1) for i in range(s1Len+1)]
+
+    res=0
+    for i in range(1,s1Len+1):
+        for j in  range(1,s2Len+1):
+            if s1[i-1]==s2[j-1]:
+                arr[i][j]=arr[i-1][j-1]+1
+                if res<arr[i][j]:
+                    res=arr[i][j]
+            else:
+                arr[i][j]=0
+
+    return res
+
+def LCS(self,s1,s2):
+    s1Len=len(s1)
+    s2Len=len(s2)
+    arr=[[0]*(s2Len+1) for i in range(s1Len+1)]
+
+    for i in range(1,s1Len+1):
+        for j in  range(1,s2Len+1):
+            if s1[i-1]==s2[j-1]:
+                arr[i][j]=arr[i-1][j-1]+1
+            else:
+                arr[i][j]=max(arr[i-1][j],arr[i][j-1])
+
+    return arr[s1Len][s2Len]
+
+def EditDistance(self,s1,s2):
+    s1Len=len(s1)
+    s2Len=len(s2)
+    arr=[[0]*(s2Len+1) for i in range(s1Len+1)]
+
+    for i in range(s1Len+1):
+        arr[i][0]=i
+    for i in range(s2Len+1):
+        arr[0][i]=i
+    for i in range(1,s1Len+1):
+        for j in  range(1,s2Len+1):
+            tmp=1
+            if s1[i-1]==s2[j-1]:
+                tmp=0
+            arr[i][j]=min([arr[i][j-1]+1,arr[i-1][j]+1,arr[i-1][j-1]+tmp])
+    return arr[s1Len][s2Len]
+
+from math import *
+def fft(fx, inverse=False):
+    n = len(fx)
+    if n == 1:
+        return [fx[0]]
+    fx1 = []
+    fx2 = []
+    for i in range(0, n, 2):
+        fx1.append(fx[i])
+        fx2.append(fx[i + 1])
+    y1 = fft(fx1, inverse=inverse)
+    y2 = fft(fx2, inverse=inverse)
+    y = []
+    for i in range(n):
+        w = cos(2 * i * pi / n) + 1j * sin(2 * i * pi / n)
+        if inverse:
+            w = 1 / w
+        yi = y1[i % (n // 2)] + w * y2[i % (n // 2)]
+        y.append(yi)
+    return y
+
+def fx_mul(fx1, fx2):
+    n = max(len(fx1), len(fx2))
+    k = 1
+    while n > k:
+        k *= 2
+    n = 2 * k
+    fx1 = fx1 + [0] * (n - len(fx1))
+    fx2 = fx2 + [0] * (n - len(fx2))
+    y1 = fft(fx1)
+    y2 = fft(fx2)
+    y = [y1 * y2 for y1, y2 in zip(y1, y2)]
+    fx = fft(y, inverse=True)
+    l = len(fx)
+    fx = [i / l for i in fx]
+    return fx
