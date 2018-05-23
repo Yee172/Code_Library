@@ -11,7 +11,7 @@ struct edge
     ll v;
     ll w;
 };
-vector<edge> e[M];
+vector<edge> e[N];
 
 inline void insert_edge(ll u, ll v, ll w)
 {
@@ -55,10 +55,34 @@ ll dij(ll st, ll n)
 ll dp[N][N];
 void floyd(ll n)
 {
-    for(ll k = 1; k <= n; k++)
-        for(ll i = 1; i <= n; i++)
-            for(ll j = 1; j <= n; j++)
+    for (ll k = 1; k <= n; k++)
+        for (ll i = 1; i <= n; i++)
+            for (ll j = 1; j <= n; j++)
                 dp[i][j] = min(dp[i][j], dp[i][k] + dp[k][j]);
+}
+
+// Judge the negative cycle
+bool bellman_ford(ll st, ll n)
+{
+    for (ll i = 1; i <= n; ++i) dis[i] = inf;
+    dis[st] = 0;
+    for (ll t = 1; t <= n; t++)
+        for (ll u = 1; u <= n; u++)
+            for (ll i = 0; i < e[u].size(); i++)
+            {
+                ll v = e[u][i].v;
+                ll w = e[u][i].w;
+                if (dis[v] > dis[u] + w)
+                    dis[v] = dis[u] + w;
+            }
+    for (ll u = 1; u <= n; u++)
+        for (ll i = 0; i < e[u].size(); i++)
+        {
+            ll v = e[u][i].v;
+            ll w = e[u][i].w;
+            if (dis[v] > dis[u] + w) return true;
+        }
+    return false;
 }
 
 // Judge the negative cycle
