@@ -1,3 +1,11 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+'''
+@Author    : Yee_172
+@Date      : 2018/04/13
+'''
+__author__ = 'Yee_172'
+
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
