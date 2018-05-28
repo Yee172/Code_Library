@@ -50,15 +50,12 @@ rd = lambda: next(sys.stdin, '').strip()
 
 
 '''
-import sys
-sys.setrecursionlimit(10 ** 6)
+__import__('sys').setrecursionlimit(10 ** 6)
 '''
 
 
 '''
-import sys
-if locals()['__file__'][-2:] == 'py':
-    sys.stdin = open('in.txt', 'r')
+if locals()['__file__'][-2:] == 'py': __import__('sys').stdin = open('in.txt', 'r')
 '''
 
 
@@ -67,6 +64,14 @@ from collections import defaultdict
 a = defaultdict(int)
 '''
 
+"""
+from decimal import *
+getcontext().prec = 50
+'''
+Decimal(1)
+Decimal('0.3')
+'''
+"""
 
 """
 '''
