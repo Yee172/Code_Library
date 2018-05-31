@@ -7,6 +7,7 @@ const ll mod = 0x3b9aca07;
 
 struct Matrix
 {
+    bool cyclic = false;
     ll n;
     ll a[N][N];
     Matrix() {}
@@ -25,12 +26,23 @@ struct Matrix
     Matrix operator*(Matrix &b) const
     {
         Matrix res(n);
-        rep(i, n) rep(j, n) rep(k, n) res[i][j] += a[i][k] * b[k][j] % mod, res[i][j] %= mod;
+        if (cyclic)
+        {
+            res.cyclic = true;
+            rep(k, n) if (a[1][k]) rep(j, n) if (b[k][j]) res[1][j] += a[1][k] * b[k][j] % mod, res[1][j] %= mod;
+            rep(i, n - 1)
+            {
+                res[i + 1][1] = res[i][n];
+                rep(j, n - 1) res[i + 1][j + 1] = res[i][j];
+            }
+        }
+        else rep(i, n) rep(j, n) rep(k, n) res[i][j] += a[i][k] * b[k][j] % mod, res[i][j] %= mod;
         return res;
     }
     Matrix operator^(ll t) const
     {
         Matrix res(n);
+        res.cyclic = cyclic;
         rep(i, n) res[i][i] = 1;
         Matrix tmp = *this;
         while (t)
