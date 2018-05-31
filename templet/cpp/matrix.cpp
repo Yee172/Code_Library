@@ -3,7 +3,7 @@ using namespace std;
 typedef long long ll;
 const ll N = 110;
 const ll mod = 0x3b9aca07;
-#define rep(i, n) for (ll i = 0; i < n; i++)
+#define rep(i, n) for (ll i = 0; (i) < (n); (i)++)
 
 struct Matrix
 {
@@ -29,10 +29,10 @@ struct Matrix
         if (cyclic)
         {
             res.cyclic = true;
-            rep(k, n) if (a[1][k]) rep(j, n) if (b[k][j]) res[1][j] += a[1][k] * b[k][j] % mod, res[1][j] %= mod;
+            rep(k, n) if (a[0][k]) rep(j, n) if (b[k][j]) res[0][j] += a[0][k] * b[k][j] % mod, res[0][j] %= mod;
             rep(i, n - 1)
             {
-                res[i + 1][1] = res[i][n];
+                res[i + 1][0] = res[i][n - 1];
                 rep(j, n - 1) res[i + 1][j + 1] = res[i][j];
             }
         }
