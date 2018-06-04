@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-'''
+"""
 @Author    : Yee_172
 @Date      : 2018/05/28
-'''
+"""
 __author__ = 'Yee_172'
 
 
@@ -23,11 +23,9 @@ a = Decimal('0.3')
 '''
 a -> args
 k -> kwargs
-pt -> print
 rd -> read
 gcd -> greatest common divisor
 '''
-pt = lambda *a, **k: print(*a, **k, flush=True)
 rd = lambda: map(int, input().split())
 gcd = lambda a, b: gcd(b, a % b) if b else a
 from math import gcd

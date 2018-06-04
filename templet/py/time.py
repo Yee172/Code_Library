@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-'''
+"""
 @Author    : Yee_172
 @Date      : 2018/05/28
-'''
+"""
 __author__ = 'Yee_172'
 
 
@@ -13,11 +13,10 @@ Timer for testing
 import contextlib
 import datetime as dt
 @contextlib.contextmanager
-def timer(s=''):
+def timer():
     start = dt.datetime.now()
     yield
     end = dt.datetime.now()
-    if s: print(s + ' : ', end='')
     print(end - start)
 '''
 usage:

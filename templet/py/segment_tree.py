@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-'''
+"""
 @Author    : Yee_172
 @Date      : 2018/05/28
-'''
+"""
 __author__ = 'Yee_172'
 
 class SegmentTree():
