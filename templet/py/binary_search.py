@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-'''
+"""
 @Author    : Yee_172
 @Date      : 2018/05/28
-'''
+"""
 __author__ = 'Yee_172'
 
 
@@ -25,6 +25,9 @@ def bs(a, v):
     while l < r:
         m = l + (r - l + 1 >> 1)
         t = a[m]
-        if t == v: return m
-        elif t < v: l = m
-        else r = m - 1
+        if t == v:
+            return m
+        elif t < v:
+            l = m
+        else:
+            r = m - 1
