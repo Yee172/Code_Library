@@ -54,7 +54,6 @@ void mobius_mu_sieve()
         if (!vis[i]) prime.push_back(i), mo[i] = -1;
         for (ll j = 0; j < prime.size(), i * prime[j] < MAXN; j++)
         {
-            if (i * prime[j] >= MAXN) break;
             vis[i * prime[j]] = true;
             if (i % prime[j]) mo[i * prime[j]] = -mo[i];
             else
