@@ -1,6 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 typedef long long ll;
+#define MAXN 1000050
+
 
 vector<ll> prime;
 bool vis[MAXN];
@@ -9,13 +11,14 @@ void euler_sieve()
     for (ll i = 2; i < MAXN; i++)
     {
         if (!vis[i]) prime.push_back(i);
-        for (vector<ll>::iterator pr = prime.begin(); pr != prime.end(), i * *pr < MAXN; pr++)
+        for (ll j = 0; j < prime.size(), i * prime[j] < MAXN; j++)
         {
-            vis[i * *pr] = 1;
-            if (i % *pr == 0) break;
+            vis[i * prime[j]] = 1;
+            if (i % prime[j] == 0) break;
         }
     }
 }
+
 
 vector<ll> prime;
 bool vis[MAXN];
@@ -26,18 +29,43 @@ void euler_function_sieve()
     for (ll i = 2; i < MAXN; i++)
     {
         if (!vis[i]) prime.push_back(i), phi[i] = i - 1;
-        for (vector<ll>::iterator pr = prime.begin(); pr != prime.end(), i * *pr < MAXN; pr++)
+        for (ll j = 0; j < prime.size(), i * prime[j] < MAXN; j++)
         {
-            vis[i * *pr] = 1;
-            if (i % *pr == 0)
+            vis[i * prime[j]] = 1;
+            if (i % prime[j] == 0)
             {
-                phi[i * *pr] = phi[i] * *pr;
+                phi[i * prime[j]] = phi[i] * prime[j];
                 break;
             }
-            else phi[i * *pr] = phi[i] * (*pr - 1);
+            else phi[i * prime[j]] = phi[i] * (prime[j] - 1);
         }
     }
 }
+
+
+vector<ll> prime;
+bool vis[MAXN];
+ll mo[MAXN];
+void mobius_mu_sieve()
+{
+    mo[1] = 1;
+    for (ll i = 2; i < MAXN; i++)
+    {
+        if (!vis[i]) prime.push_back(i), mo[i] = -1;
+        for (ll j = 0; j < prime.size(), i * prime[j] < MAXN; j++)
+        {
+            if (i * prime[j] >= MAXN) break;
+            vis[i * prime[j]] = true;
+            if (i % prime[j]) mo[i * prime[j]] = -mo[i];
+            else
+            {
+                mo[i * prime[j]] = 0;
+                break;
+            }
+        }
+    }
+}
+
 
 int is_prime(ll n)
 {
@@ -52,6 +80,7 @@ int is_prime(ll n)
     }
     return 1;
 }
+
 
 map<ll, ll> generate_factors(ll n)
 {

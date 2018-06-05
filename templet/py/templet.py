@@ -10,6 +10,9 @@ __author__ = 'Yee_172'
 inf = 0x3f3f3f3f3f3f3f3f
 
 
+a = frozenset()
+
+
 from collections import defaultdict
 a = defaultdict(int)
 
