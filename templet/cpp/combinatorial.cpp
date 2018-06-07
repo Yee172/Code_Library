@@ -3,6 +3,65 @@ using namespace std;
 typedef long long ll;
 #define rep(i, n) for (ll i = 1; (i) <= (n); (i)++)
 #define mod 0x3b9aca07
+#define MAXN 200050
+
+
+ll factorial[MAXN];
+void init_factorial()
+{
+    factorial[0] = 1;
+#ifdef mod
+    for (ll i = 1; i < MAXN; i++)
+        factorial[i] = i * factorial[i - 1] % mod;
+#else
+    for (ll i = 1; i < MAXN, i <= 20; i++)
+        factorial[i] = i * factorial[i - 1];
+    //MAXIMUM 20
+#endif
+}
+
+
+ll derangement[MAXN];
+void init_derangement()
+{
+    derangement[1] = 0, derangement[2] = 1;
+#ifdef mod
+    for (ll i = 3; i < MAXN; i++)
+        derangement[i] = (i - 1) * ((derangement[i - 1] + derangement[i - 2]) % mod) % mod;
+#else
+    for (ll i = 3; i < MAXN, i <= 20; i++)
+        derangement[i] = (i - 1) * (derangement[i - 1] + derangement[i - 2]);
+    //MAXIMUM 20
+#endif
+}
+
+
+ll catalan[MAXN];
+#ifdef mod
+ll mod_inverse[MAXN];
+ll factorial_inverse[MAXN];
+#endif
+void init_catalan()
+{
+    catalan[1] = 1;
+#ifdef mod
+    mod_inverse[0] = 0, mod_inverse[1] = 1;
+    for (ll i = 2; i < MAXN; i++)
+        mod_inverse[i] = (mod - mod / i) * mod_inverse[mod % i] % mod;
+    factorial_inverse[0] = 1;
+    for (ll i = 1; i < MAXN; i++)
+        factorial_inverse[i] = factorial_inverse[i - 1] * mod_inverse[i] % mod;
+    for (ll i = 2; i < MAXN; i++)
+        catalan[i] = catalan[i - 1] * (4 * i - 2) % mod * factorial_inverse[i + 1] % mod;
+#else
+    for (ll i = 2; i < MAXN, i <= 33; i++)
+        catalan[i] = catalan[i - 1] * (4 * i - 2) / (i + 1);
+    if (MAXN > 34) catalan[34] = 812944042149730764;
+    if (MAXN > 35) catalan[35] = 3116285494907301262;
+    // MAXIMUM 35
+#endif
+}
+
 
 const ll N = 205;
 const ll M = 105;
@@ -14,7 +73,6 @@ void binom_init()
 }
 
 // stiring numbers of the second kind
-#define MAXN 200050
 ll powmod(ll a,ll b) {ll r = 1; a %= mod; for(; b; b >>= 1) {if (b & 1) r = r * a % mod; a = a * a % mod;} return r;}
 ll modinv[MAXN];
 ll fa_inv[MAXN];

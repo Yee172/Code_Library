@@ -45,20 +45,20 @@ void euler_function_sieve()
 
 vector<ll> prime;
 bool vis[MAXN];
-ll mo[MAXN];
+ll mu[MAXN];
 void mobius_mu_sieve()
 {
-    mo[1] = 1;
+    mu[1] = 1;
     for (ll i = 2; i < MAXN; i++)
     {
-        if (!vis[i]) prime.push_back(i), mo[i] = -1;
+        if (!vis[i]) prime.push_back(i), mu[i] = -1;
         for (ll j = 0; j < prime.size(), i * prime[j] < MAXN; j++)
         {
             vis[i * prime[j]] = true;
-            if (i % prime[j]) mo[i * prime[j]] = -mo[i];
+            if (i % prime[j]) mu[i * prime[j]] = -mu[i];
             else
             {
-                mo[i * prime[j]] = 0;
+                mu[i * prime[j]] = 0;
                 break;
             }
         }
