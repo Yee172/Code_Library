@@ -1,7 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 typedef long long ll;
-#define rep(i, n) for (ll i = 1; (i) <= (n); (i)++)
+#define rep(i, n) for (ll i = 0; (i) < (n); (i)++)
+#define _rep(i, n) for (ll i = 1; (i) <= (n); (i)++)
 #define mod 0x3b9aca07
 #define MAXN 200050
 
@@ -24,7 +25,7 @@ void init_factorial()
 ll derangement[MAXN];
 void init_derangement()
 {
-    derangement[1] = 0, derangement[2] = 1;
+    derangement[0] = 1, derangement[1] = 0, derangement[2] = 1;
 #ifdef mod
     for (ll i = 3; i < MAXN; i++)
         derangement[i] = (i - 1) * ((derangement[i - 1] + derangement[i - 2]) % mod) % mod;
@@ -65,11 +66,16 @@ void init_catalan()
 
 const ll N = 205;
 const ll M = 105;
-ll binom[N][M];
-void binom_init()
+ll binomial[N][M];
+void init_binomial()
 {
-    rep(i, N) binom[i - 1][0] = 1;
-    rep(i, N - 1) rep(j, M - 1) binom[i][j] = (binom[i - 1][j] + binom[i - 1][j - 1]) % mod;
+#ifdef mod
+    rep(i, N) binomial[i][0] = 1;
+    rep(i, N - 1) rep(j, M - 1) binomial[i + 1][j + 1] = (binomial[i][j + 1] + binomial[i][j]) % mod;
+#else
+    rep(i, N) binomial[i][0] = 1;
+    rep(i, N - 1) rep(j, M - 1) binomial[i + 1][j + 1] = binomial[i][j + 1] + binomial[i][j];
+#endif
 }
 
 // stiring numbers of the second kind
@@ -78,7 +84,7 @@ ll modinv[MAXN];
 ll fa_inv[MAXN];
 ll f[] = {1, -1};
 
-ll stirling_init()
+ll init_stirling()
 {
     modinv[0] = 0, modinv[1] = 1;
     for (ll i = 2; i < MAXN; i++) modinv[i] = (mod - mod / i) * modinv[mod % i] % mod;
