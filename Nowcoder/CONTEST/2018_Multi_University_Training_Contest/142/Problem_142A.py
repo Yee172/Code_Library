@@ -7,8 +7,7 @@ while i >= 2:
     i >>= 1
 def gen(i):
     return gao[i] if i < 28 else 1
-t = int(input())
-for _ in range(t):
+for _ in range(int(input())):
     s = input()
     n = 0
     p = 0
