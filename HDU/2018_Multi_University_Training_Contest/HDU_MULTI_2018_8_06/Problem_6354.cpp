@@ -33,7 +33,6 @@ void Main()
         }
         printf("%.12f\n", (res + acos(-1) * R) * 2);
     }
-
 }
 
 signed main()
