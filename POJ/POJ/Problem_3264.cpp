@@ -32,8 +32,6 @@ typedef long long ll;
 const ll INF = 0x3f3f3f3f3f3f3f3f;
 ll a[MAXN];
 
-
-
 template <typename T>
 class SegmentTree
 {
