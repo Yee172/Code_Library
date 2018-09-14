@@ -18,7 +18,7 @@ namespace extended_Lucas
     namespace euler_sieve
     {
         typedef int TYPE;
-        const TYPE MAXN = 1000050;
+        const TYPE MAXN = 10050;
         TYPE prime[MAXN];
         int cnt = 0;
         bool vis[MAXN];
