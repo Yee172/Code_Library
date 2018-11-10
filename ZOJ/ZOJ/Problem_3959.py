@@ -1,9 +1,10 @@
-t = input()
+ipt = iter(__import__('sys').stdin.readlines())
+t = int(ipt.next())
 for _ in xrange(t):
-    n = input()
+    n = int(ipt.next())
     ok = 1
     if 9 < n < 14:
-        a = list(map(int, raw_input().split()))
+        a = list(map(int, ipt.next().split()))
         a.sort()
         num1 = 0
         for i in xrange(n - 2):
@@ -19,5 +20,5 @@ for _ in xrange(t):
             ok = 0
         print('Yes' if ok else 'No')
     else:
-        raw_input()
+        ipt.next()
         print('No')
