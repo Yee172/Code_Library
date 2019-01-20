@@ -27,7 +27,7 @@ for i in range(2, MAXN):
         vis[i * x] = True
         if not i % x:
             break
-print('Prime numebr generated successfully.')
+print('Prime number generated successfully.')
 
 def find(x):
     lft = 0
