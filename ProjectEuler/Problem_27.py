@@ -1,16 +1,15 @@
-# $n^2 + a n + b$, where $|a| < 1000, |b| \leq 1000$
-# Find the product of the coefficients,
-# $a$ and $b$, for the quadratic expression
-# that produces the maximum number of primes
-# for consecutive values of $n$,
-# starting with $n = 0$.
+# n^2 + a n + b, where |a| < 1000, |b| \leq 1000
+# Find the product of the coefficients, a and b,
+# for the quadratic expression that produces the
+# maximum number of primes for consecutive values of n,
+# starting with n = 0.
 # ----------------------------------------------------
-# Analysis: If $b$ is even, then when $n$ is even, the
+# Analysis: If b is even, then when n is even, the
 #           expression is even, which is not prime
-#           except $2$. Ergo, $b$ must be odd.
-#           If $a$ is even, then when $n$ is odd, the
+#           except 2. Ergo, b must be odd.
+#           If a is even, then when n is odd, the
 #           expression is even, which is not prime
-#           except $2$. Ergo, $a$ must be odd.
+#           except 2. Ergo, a must be odd.
 
 print('Sieving prime numbers...')
 MAXN = 10 ** 7

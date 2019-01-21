@@ -1,6 +1,6 @@
-# A number $n$ is called deficient if the sum of its
-# proper divisors is less than $n$ and it is called
-# abundant if this sum exceeds $n$.
+# A number n is called deficient if the sum of its
+# proper divisors is less than n and it is called
+# abundant if this sum exceeds n.
 # By mathematical analysis, it can be shown that all
 # integers greater than 28123 can be written as the
 # sum of two abundant numbers.
