@@ -4,13 +4,13 @@
 # that exists?
 # ----------------------------------------------------
 # Analysis: \sum_{n = 1}^{9} n = 45
-#              => 9-digit number is dividable by 3
+#              => 9-digit number is divisible by 3
 #           \sum_{n = 1}^{8} n = 36
-#              => 8-digit number is dividable by 3
+#              => 8-digit number is divisible by 3
 #           \sum_{n = 1}^{6} n = 21
-#              => 6-digit number is dividable by 3
+#              => 6-digit number is divisible by 3
 #           \sum_{n = 1}^{5} n = 15
-#              => 5-digit number is dividable by 3
+#              => 5-digit number is divisible by 3
 #           brute force the remaining
 
 from itertools import permutations
