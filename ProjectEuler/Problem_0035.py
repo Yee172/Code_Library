@@ -1,8 +1,8 @@
-# How many circular primes are there
-# below one million.
+# How many circular primes are there below one million.
 # ----------------------------------------------------
 # Analysis: brute force
 
+print('Sieving prime numbers...')
 MAXN = 10 ** 6
 prime = []
 vis = [False] * MAXN
@@ -17,16 +17,16 @@ for i in range(2, MAXN):
         vis[i * x] = True
         if not i % x:
             break
+print('Prime number generated successfully.')
 
-prime = set(prime)
 cnt = 0
 for x in prime:
-    ok = 1
+    ok = True
     n = str(x)
     if '0' in n:
         continue
     for i in range(1, len(n)):
-        ok &= int(n[i:] + n[:i]) in prime
+        ok &= not vis[int(n[i:] + n[:i])]
     cnt += ok
 
 print(cnt)
