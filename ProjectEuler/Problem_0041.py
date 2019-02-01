@@ -35,10 +35,10 @@ print('Prime number generated successfully.')
 def is_prime(n):
     if n < MAXN:
         return not vis[n]
-    for i in range(len(prime)):
-        if prime[i] ** 2 > n:
+    for p in prime:
+        if p ** 2 > n:
             break
-        if not n % prime[i]:
+        if not n % p:
             return False
     return True
 
