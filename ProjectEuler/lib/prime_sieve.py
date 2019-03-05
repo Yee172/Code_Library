@@ -1,4 +1,4 @@
-def prime_sieve(MAXN=10**7, info=True):
+def prime_sieve(MAXN=10 ** 7, info=True):
     """Return a list of prime up to MAXN
     if bitarray is installed:
         Sieve of Eratosthenes (Learnt from code of epiclolz)

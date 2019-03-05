@@ -4,29 +4,17 @@
 # maximum number of primes for consecutive values of n,
 # starting with n = 0.
 # ----------------------------------------------------
-# Analysis: If b is even, then when n is even, the
+# Analysis: brute force
+#           If b is even, then when n is even, the
 #           expression is even, which is not prime
 #           except 2. Ergo, b must be odd.
 #           If a is even, then when n is odd, the
 #           expression is even, which is not prime
 #           except 2. Ergo, a must be odd.
 
-print('Sieving prime numbers...')
-MAXN = 10 ** 7
-prime = []
-vis = [False] * MAXN
-vis[0] = True
-vis[1] = True
-for i in range(2, MAXN):
-    if not vis[i]:
-        prime.append(i)
-    for x in prime:
-        if i * x >= MAXN:
-            break
-        vis[i * x] = True
-        if not i % x:
-            break
-print('Prime number generated successfully.')
+from lib.prime_sieve import prime_sieve
+
+prime = prime_sieve(10 ** 7)
 
 def find(x):
     lft = 0
@@ -58,5 +46,6 @@ for a in range(-999, 1000, 2):
         elif count > maximum:
             res = [a * b]
             maximum = count
+
 print(maximum)
 print(res)

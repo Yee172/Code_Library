@@ -8,24 +8,10 @@
 # ----------------------------------------------------
 # Analysis: brute force
 
-print('Sieving prime numbers...')
-MAXN = 10 ** 5
-prime = []
-vis = [False] * MAXN
-vis[0] = True
-vis[1] = True
-for i in range(2, MAXN):
-    if not vis[i]:
-        prime.append(i)
-    for x in prime:
-        if i * x >= MAXN:
-            break
-        vis[i * x] = True
-        if not i % x:
-            break
-print('Prime number generated successfully.')
+from lib.prime_sieve import prime_sieve
 
 MAXN = 10000
+prime = prime_sieve(10 ** 5)
 
 def d(x):
     n = x

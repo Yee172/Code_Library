@@ -1,22 +1,7 @@
 # Find the sum of all the primes below two million.
 # ----------------------------------------------------
-# Analysis: Euler sieve
+# Analysis: brute force
 
-print('Sieving prime numbers...')
-MAXN = 2000000
-prime = []
-vis = [False] * MAXN
-vis[0] = True
-vis[1] = True
-for i in range(2, MAXN):
-    if not vis[i]:
-        prime.append(i)
-    for x in prime:
-        if i * x >= MAXN:
-            break
-        vis[i * x] = True
-        if not i % x:
-            break
-print('Prime number generated successfully.')
+from lib.prime_sieve import prime_sieve
 
-print(sum(prime))
+print(sum(prime_sieve(2000000)))

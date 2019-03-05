@@ -2,21 +2,6 @@
 # ----------------------------------------------------
 # Analysis: Euler sieve
 
-print('Sieving prime numbers...')
-MAXN = 1000100
-prime = []
-vis = [False] * MAXN
-vis[0] = True
-vis[1] = True
-for i in range(2, MAXN):
-    if not vis[i]:
-        prime.append(i)
-    for x in prime:
-        if i * x >= MAXN:
-            break
-        vis[i * x] = True
-        if not i % x:
-            break
-print('Prime number generated successfully.')
+from lib.prime_sieve import prime_sieve
 
-print(prime[10000])
+print(prime_sieve(1000100)[10000])

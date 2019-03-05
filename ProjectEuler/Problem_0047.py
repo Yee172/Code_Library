@@ -5,23 +5,9 @@
 # Analysis: brute force
 
 from itertools import dropwhile
+from lib.prime_sieve import prime_sieve
 
-print('Sieving prime numbers...')
-MAXN = 10000
-prime = []
-vis = [False] * MAXN
-vis[0] = True
-vis[1] = True
-for i in range(2, MAXN):
-    if not vis[i]:
-        prime.append(i)
-    for x in prime:
-        if i * x >= MAXN:
-            break
-        vis[i * x] = True
-        if not i % x:
-            break
-print('Prime number generated successfully.')
+prime = prime_sieve(10000)
 
 d = dict()
 

@@ -4,26 +4,12 @@
 # Analysis: greedy algorithm
 
 from queue import PriorityQueue
+from lib.prime_sieve import prime_sieve
 
 NEED = 500500
 MOD = 500500507
 
-print('Sieving prime numbers...')
-MAXN = 8005000
-prime = []
-vis = [False] * MAXN
-vis[0] = True
-vis[1] = True
-for i in range(2, MAXN):
-    if not vis[i]:
-        prime.append(i)
-    for x in prime:
-        if i * x >= MAXN:
-            break
-        vis[i * x] = True
-        if not i % x:
-            break
-print('Prime number generated successfully.')
+prime = prime_sieve(8005000)
 
 res = 1
 q = PriorityQueue()
