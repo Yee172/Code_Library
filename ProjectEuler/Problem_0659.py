@@ -18,7 +18,7 @@
 #               1 + 4 k^{2} | 1 + 4 (k + m)^{2}
 #           <=> 1 + 4 k^{2} | 1 + 4 k^{2} + 4 m (m + 2 k)
 #           <=> 1 + 4 k^{2} | m (m + 2 k)
-#           <=> 1 + 4 k^{2} | m or 1 + 4 k^{2} | m + 2 k
+#           <=> 1 + 4 k^{2} | m or 1 + 4 k^{2} | m + 2 k (in the case of 1 + 4 k^{2} is a prime number)
 #           <=> m = n (1 + 4 k^{2}) or m = n (1 + 4 k^{2}) - 2 k, \forall n \in \N
 #              => 1 + 4 k^{2} | 1 + 4 (n (1 + 4 k^{2}) \pm k)^{2}, \forall n \in \N
 
