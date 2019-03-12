@@ -8,6 +8,7 @@ def prime_sieve(MAXN=10 ** 7, info=True):
     """
     if info:
         print('Sieving prime numbers...')
+
     try:
         from bitarray import bitarray
         is_prime = bitarray(MAXN + 1 >> 1)
@@ -31,6 +32,8 @@ def prime_sieve(MAXN=10 ** 7, info=True):
                 vis[i * x] = True
                 if not i % x:
                     break
+    
     if info:
         print('Prime number generated successfully.')
+
     return prime

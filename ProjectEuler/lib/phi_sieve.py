@@ -4,6 +4,7 @@ def phi_sieve(MAXN=10 ** 7, only_phi=False, info=True):
     """
     if info:
         print('Sieving prime numbers and their phi...')
+
     prime = []
     vis = [False] * MAXN
     phi = [0] * MAXN
@@ -22,8 +23,10 @@ def phi_sieve(MAXN=10 ** 7, only_phi=False, info=True):
             else:
                 phi[i * x] = phi[i] * x
                 break
+
     if info:
         print('Prime number and phi generated successfully.')
+
     if only_phi:
         return phi
     else:
