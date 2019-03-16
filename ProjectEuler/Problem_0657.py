@@ -20,8 +20,8 @@
 #                                   = \sum_{j = 0}^{\alpha - 1} i(\alpha, j) + \sum_{j = \alpha}^{n} i(\alpha, j)
 #                                   = \sum_{j = 0}^{\alpha - 1} \alpha^{j} + \sum_{j = \alpha}^{n} (\alpha^{j} - S(j, \alpha) * \alpha!)
 #                                   = \sum_{j = 0}^{n} \alpha^{j} - \sum_{j = \alpha}^{n} (S(j, \alpha) * \alpha!)
-#                                   = \sum_{j = 0}^{n} \alpha^{j} - \sum_{j = \alpha}^{n} \sum_{k = 0}^{\alpha} ((-1)^{k} * \binom{\alpha, k} * (\alpha - k)^{j})
-#                                   = \sum_{j = 0}^{n} \alpha^{j} - \sum_{k = 0}^{\alpha} (((-1)^{k} * \binom{\alpha, k}) * \sum_{j = \alpha}^{n} (\alpha - k)^{j})
+#                                   = \sum_{j = 0}^{n} \alpha^{j} - \sum_{j = \alpha}^{n} \sum_{k = 0}^{\alpha} ((-1)^{k} * \binom{\alpha}{k} * (\alpha - k)^{j})
+#                                   = \sum_{j = 0}^{n} \alpha^{j} - \sum_{k = 0}^{\alpha} (((-1)^{k} * \binom{\alpha}{k}) * \sum_{j = \alpha}^{n} (\alpha - k)^{j})
 
 MOD = 0x3b9aca07
 MAXN = 10 ** 7 + 1
