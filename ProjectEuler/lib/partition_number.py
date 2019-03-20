@@ -1,8 +1,18 @@
 def partition_number(MAXN=10 ** 7, info=True, **kwargs):
     """Return a list of partition number with index up to MAXN
+    
     Use the connection between pentagon number and partition number
-    optional parameter:
-        modulo: default 0
+    
+    Arguments:
+        **kwargs {[type]} -- [description]
+            modulo {int} -- modulo number (default: {0})
+    
+    Keyword Arguments:
+        MAXN {int} -- upper bound (default: {10 ** 7})
+        info {bool} -- need info or not (default: {True})
+    
+    Returns:
+        list -- a list of partition number with index up to MAXN
     """
     modulo = kwargs.get('modulo', 0)
 

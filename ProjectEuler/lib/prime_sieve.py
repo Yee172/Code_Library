@@ -1,10 +1,18 @@
 def prime_sieve(MAXN=10 ** 7, info=True):
-    """Return a list of prime up to MAXN
+    """Return a list of prime with index up to MAXN
+    
     if bitarray is installed:
         Sieve of Eratosthenes (Learnt from code of epiclolz)
         PS: faster because of the operation of bitarray
     else:
         Sieve of Euler in normal way
+    
+    Keyword Arguments:
+        MAXN {int} -- upper bound (default: {10 ** 7})
+        info {bool} -- need info or not (default: {True})
+    
+    Returns:
+        list -- a list of prime with index up to MAXN
     """
     if info:
         print('Sieving prime numbers...')
