@@ -1,4 +1,4 @@
-def prime_sieve(MAXN=10 ** 7, info=True):
+def prime_sieve(MAXN=10 ** 7, only_prime=True, info=True, **kwargs):
     """Return a list of prime with index up to MAXN
     
     if bitarray is installed:
@@ -6,9 +6,15 @@ def prime_sieve(MAXN=10 ** 7, info=True):
         PS: faster because of the operation of bitarray
     else:
         Sieve of Euler in normal way
+
+    Arguments:
+        **kwargs {[type]} -- [description]
+            raw_is_prime {bool} -- when only_prime is False, this argument determines whether
+                                   return the raw is_prime list of the faster way (default: {False})
     
     Keyword Arguments:
         MAXN {int} -- upper bound (default: {10 ** 7})
+        only_prime {bool} -- whether only return prime or with the list of is_prime
         info {bool} -- need info or not (default: {True})
     
     Returns:
@@ -18,30 +24,44 @@ def prime_sieve(MAXN=10 ** 7, info=True):
         print('Sieving prime numbers...')
 
     try:
+        if info:
+            print('Trying using bitarray to accelerate the speed...')
+
         from bitarray import bitarray
-        is_prime = bitarray(MAXN + 1 >> 1)
+        is_prime = bitarray(MAXN >> 1)
         is_prime.setall(1)
         is_prime[0] = 0
         for i in range(1, int(MAXN ** .5)):
             if is_prime[i]:
                 is_prime[2 * i ** 2 + 2 * i::2 * i + 1] = 0
         prime = [2] + [i * 2 + 1 for i in is_prime.search(bitarray([1]))]
+
+        if not only_prime:
+            if not kwargs.get('raw_is_prime', False):
+                is_prime = [bool(i & 1 and is_prime[i - 1 >> 1]) for i in range(MAXN)]
+                is_prime[2] = True
     except:
+        if info:
+            print('Something was wrong with bitarray, using the sieve of Euler in normal way...')
+
         prime = []
-        vis = [False] * MAXN
-        vis[0] = True
-        vis[1] = True
+        is_prime = [True] * MAXN
+        is_prime[0] = False
+        is_prime[1] = False
         for i in range(2, MAXN):
-            if not vis[i]:
+            if is_prime[i]:
                 prime.append(i)
             for x in prime:
                 if i * x >= MAXN:
                     break
-                vis[i * x] = True
+                is_prime[i * x] = False
                 if not i % x:
                     break
     
     if info:
         print('Prime number generated successfully.')
 
-    return prime
+    if only_prime:
+        return prime
+    else:
+        return is_prime, prime
