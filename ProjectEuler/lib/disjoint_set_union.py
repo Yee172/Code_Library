@@ -7,7 +7,7 @@ class disjoint_set_union:
         self.father = [i for i in range(length)]
 
     def get_father(self, x):
-        """get the father of index x
+        """Get the father of index x
         
         get the father of index x and compress the route
         
@@ -21,7 +21,7 @@ class disjoint_set_union:
         return self.father[x]
 
     def union_father(self, x, y):
-        """union the set contains x and the set contains y
+        """Union the set contains x and the set contains y
         
         union the most father of index x and index y
         
