@@ -16,18 +16,18 @@ def phi_sieve(MAXN=10 ** 7, only_phi=False, info=True):
         print('Sieving prime numbers and their phi...')
 
     prime = []
-    vis = [False] * MAXN
+    is_prime = [True] * MAXN
     phi = [0] * MAXN
-    vis[0] = True
-    vis[1] = True
+    is_prime[0] = False
+    is_prime[1] = False
     for i in range(2, MAXN):
-        if not vis[i]:
+        if is_prime[i]:
             prime.append(i)
             phi[i] = i - 1
         for x in prime:
             if i * x >= MAXN:
                 break
-            vis[i * x] = True
+            is_prime[i * x] = False
             if i % x:
                 phi[i * x] = phi[i] * (x - 1)
             else:
