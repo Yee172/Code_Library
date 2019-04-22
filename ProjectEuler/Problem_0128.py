@@ -33,28 +33,18 @@
 #                 which implies that PD(n) \leq 2.
 #           Then we can just enumerate the lower bound and upper bound to get the result.
 
-print('Sieving prime numbers...')
-MAXN = 10 ** 6
-prime = []
-vis = [False] * MAXN
-vis[0] = True
-vis[1] = True
-for i in range(2, MAXN):
-    if not vis[i]:
-        prime.append(i)
-    for x in prime:
-        if i * x >= MAXN:
-            break
-        vis[i * x] = True
-        if not i % x:
-            break
-print('Prime number generated successfully.')
+from lib.prime_sieve import prime_sieve
 
-def is_prime(n):
+MAXN = 10 ** 6
+is_prime, prime = prime_sieve(MAXN, False, raw_is_prime=True)
+
+def is_prime_number(n):
+    if n == 2:
+        return True
     if n < MAXN:
-        return not vis[n]
+        return bool(n & 1 and is_prime[n - 1 >> 1])
     for p in prime:
-        if p ** 2 > n:
+        if p * p > n:
             break
         if not n % p:
             return False
@@ -101,7 +91,7 @@ def PD(x):
         return 3
     count = 0
     for y in get_neighborhood(x):
-        if is_prime(abs(y - x)):
+        if is_prime_number(abs(y - x)):
             count += 1
     return count
 
