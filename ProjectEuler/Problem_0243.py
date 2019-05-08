@@ -22,7 +22,7 @@
 #                 phi(n * p) / (p * n - 1) < phi(n * d) / (n * d - 1)
 #                    if p a prime that prime with n and d is a prime divisor of n
 
-from ProjectEuler.lib.prime_sieve import prime_sieve
+from lib.prime_sieve import prime_sieve
 
 prime = prime_sieve(30)
 p, q = 15499, 94744

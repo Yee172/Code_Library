@@ -8,7 +8,7 @@
 # ----------------------------------------------------
 # Analysis: adaptive Simpson integral
 
-from ProjectEuler.lib.adaptive_Simpson_integral import adaptive_Simpson_integral
+from lib.adaptive_Simpson_integral import adaptive_Simpson_integral
 
 pi = __import__('math').pi
 radius = 10 ** 4
