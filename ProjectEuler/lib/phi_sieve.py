@@ -20,6 +20,7 @@ def phi_sieve(MAXN=10 ** 7, only_phi=False, info=True):
     phi = [0] * MAXN
     is_prime[0] = False
     is_prime[1] = False
+    phi[1] = 1
     for i in range(2, MAXN):
         if is_prime[i]:
             prime.append(i)
