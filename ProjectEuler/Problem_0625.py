@@ -5,10 +5,9 @@
 #           Hint: G(N) = \sum_{j = 1}^{N} (j * \sum_{i = 1}^{N // j} \phi(i))
 
 from collections import defaultdict
-from ProjectEuler.lib.phi_sieve import phi_sieve
+from lib.phi_sieve import phi_sieve
 
 target = 10 ** 11
-sqrt_target = int(target ** .5) + 1
 MAXN = int(target ** (2 / 3)) + 1
 module = 0x3b800001
 phi = phi_sieve(MAXN, True)
