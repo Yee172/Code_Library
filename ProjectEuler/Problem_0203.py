@@ -3,7 +3,7 @@
 # ----------------------------------------------------
 # Analysis: brute force
 
-from ProjectEuler.lib.prime_sieve import prime_sieve
+from lib.prime_sieve import prime_sieve
 
 MAXN = 51
 prime = prime_sieve(MAXN)

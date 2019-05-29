@@ -13,7 +13,7 @@
 # ----------------------------------------------------
 # Analysis: brute force
 
-from ProjectEuler.lib.prime_sieve import prime_sieve
+from lib.prime_sieve import prime_sieve
 
 is_prime, prime = prime_sieve(10 ** 5, False, raw_is_prime=True)
 target = 25
