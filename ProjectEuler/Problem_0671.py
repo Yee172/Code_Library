@@ -18,42 +18,12 @@
 # Analysis: matrix multiplication
 #           Hint: loop means that start state equals to its end state
 
+from lib.matrix import Matrix
+
 target = 10004003002001
-module = 1000004321
+Matrix.MODULE = 1000004321
 color = 10
 size = 3
-
-
-class Matrix:
-    def __init__(self, size):
-        self.size = size
-        self.mat = [[0] * size for _ in range(size)]
-
-    def __mul__(self, another):
-        assert(self.size == another.size)
-        res = Matrix(self.size)
-        for i in range(self.size):
-            for k in range(self.size):
-                if self.mat[i][k]:
-                    for j in range(self.size):
-                        res.mat[i][j] += self.mat[i][k] * another.mat[k][j]
-                        res.mat[i][j] %= module
-        return res
-
-    def __pow__(self, exponent):
-        assert(isinstance(exponent, int) and exponent >= 0)
-        res = Matrix(self.size)
-        for i in range(self.size):
-            res.mat[i][i] = 1
-        tmp = res * self
-        while exponent:
-            if exponent & 1:
-                res *= tmp
-            tmp *= tmp
-            exponent >>= 1
-        return res
-
-
 state = [(i, 1, i, 1) for i in range(3)] + [(x, i, y, j) for x, y in [(0, 1), (1, 0), (0, 2), (2, 0), (1, 2), (2, 1), (2, 3)] for i in range(1, size + 1) for j in range(1, size + 1)]
 reverse_table = dict((x, i) for i, x in enumerate(state))
 state_transfer = Matrix(len(state))
@@ -69,17 +39,17 @@ for i in range(len(state)):
                 if c4 == c1:
                     continue
                 if c3 in (0, 1) and c4 in (0, 1):
-                    state_transfer.mat[reverse_table[(c3, 1, c4, 1)]][i] += 1
+                    state_transfer[reverse_table[(c3, 1, c4, 1)]][i] += 1
                 elif c3 in (0, 1) or c4 in (0, 1):
-                    state_transfer.mat[reverse_table[(c3, 1, c4, 1)]][i] += color - 2 - (c1 == 3)
+                    state_transfer[reverse_table[(c3, 1, c4, 1)]][i] += color - 2 - (c1 == 3)
                 else:
-                    state_transfer.mat[reverse_table[(2, 1, 2, 1)]][i] += color - 2 - (c1 == 3)
-                    state_transfer.mat[reverse_table[(2, 1, 3, 1)]][i] += (color - 3) * (color - 4) if c1 == 3 else (color - 2) * (color - 3)
+                    state_transfer[reverse_table[(2, 1, 2, 1)]][i] += color - 2 - (c1 == 3)
+                    state_transfer[reverse_table[(2, 1, 3, 1)]][i] += (color - 3) * (color - 4) if c1 == 3 else (color - 2) * (color - 3)
     else:
         for c3 in range(2):
             if c1 != c3 and c2 != c3:
-                state_transfer.mat[reverse_table[(c3, 1, c3, 1)]][i] += 1
-        state_transfer.mat[reverse_table[(2, 1, 2, 1)]][i] += color - 2 - (c1 > 1) - (c2 > 1)
+                state_transfer[reverse_table[(c3, 1, c3, 1)]][i] += 1
+        state_transfer[reverse_table[(2, 1, 2, 1)]][i] += color - 2 - (c1 > 1) - (c2 > 1)
         c2 -= c2 == 3
         for c3 in range(3):
             for n3 in (1, n1 + 1):
@@ -94,9 +64,9 @@ for i in range(len(state)):
                         if n3 == n4 == 1:
                             continue
                         if (c3 == 2 and n3 == 1) or (c4 == 2 and n4 == 1):
-                            state_transfer.mat[reverse_table[(c3, n3, c4 + (c3 == 2 and c4 == 2), n4)]][i] += color - 2 - (c1 > 1) - (c2 > 1)
+                            state_transfer[reverse_table[(c3, n3, c4 + (c3 == 2 and c4 == 2), n4)]][i] += color - 2 - (c1 > 1) - (c2 > 1)
                         else:
-                            state_transfer.mat[reverse_table[(c3, n3, c4 + (c3 == 2 and c4 == 2), n4)]][i] += 1
+                            state_transfer[reverse_table[(c3, n3, c4 + (c3 == 2 and c4 == 2), n4)]][i] += 1
 
 multi_transfer = state_transfer ** target
-print((color * multi_transfer.mat[0][0] + color * (color - 1) * sum(multi_transfer.mat[reverse_table[(0, n1, 1, n2)]][reverse_table[(0, n1, 1, n2)]] for n1 in range(1, size + 1) for n2 in range(1, size + 1))) * pow(target, module - 2, module) % module)
+print((color * multi_transfer[0][0] + color * (color - 1) * sum(multi_transfer[reverse_table[(0, n1, 1, n2)]][reverse_table[(0, n1, 1, n2)]] for n1 in range(1, size + 1) for n2 in range(1, size + 1))) * pow(target, Matrix.MODULE - 2, Matrix.MODULE) % Matrix.MODULE)
