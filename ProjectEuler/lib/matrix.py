@@ -1,4 +1,14 @@
 class Matrix:
+    """Matrix
+    
+    Matrix implements
+    
+    Variables:
+        MODULE {number} -- global module for matrix operations
+        PURE_INTEGER {bool} -- indicator of whether the matrix only contains integers
+        PRECISION {number} -- if the matrix contains decimals, then we need to set the precision
+    """
+
     MODULE = 0
     PURE_INTEGER = True
     PRECISION = 1e-8
@@ -6,6 +16,13 @@ class Matrix:
     @staticmethod
     def __sign(x):
         return -1 if x < -Matrix.PRECISION else x > Matrix.PRECISION
+
+    @staticmethod
+    def __copy(matrix_source, matrix_destination):
+        assert((matrix_source.row_number, matrix_source.column_number) == (matrix_destination.row_number, matrix_destination.column_number))
+        for i in range(matrix_source.row_number):
+            for j in range(matrix_source.column_number):
+                matrix_destination[i][j] = matrix_source[i][j]
 
     def __init__(self, row_number, column_number=0, initial_value=0):
         self.row_number = row_number
@@ -22,11 +39,15 @@ class Matrix:
     def __str__(self):
         return '\n'.join(map(lambda each_row: ' '.join(map(str, each_row)), self.matrix))
 
+    def __contains__(self, item):
+        for i in range(self.row_number):
+            if item in self[i]:
+                return True
+        return False
+
     def __copy__(self):
         copy = Matrix(self.row_number, self.column_number)
-        for i in range(self.row_number):
-            for j in range(self.column_number):
-                copy[i][j] = self[i][j]
+        Matrix.__copy(self, copy)
         return copy
 
     def __imod__(self, module):
@@ -88,10 +109,7 @@ class Matrix:
         return result
 
     def __imul__(self, another):
-        result = self * another
-        for i in range(self.row_number):
-            for j in range(self.column_number):
-                self[i][j] = result[i][j]
+        Matrix.__copy(self * another, self)
         return self
 
     def __pow__(self, exponent):
@@ -108,3 +126,7 @@ class Matrix:
                 temporary *= temporary
                 exponent >>= 1
         return result
+
+    def __ipow__(self, exponent):
+        Matrix.__copy(self ** exponent, self)
+        return self
