@@ -24,7 +24,7 @@
 # The two clocks are fed all the prime numbers between
 # A = 10^{7} and B = 2 \times 10^{7}.
 # Find the difference between the total number of transitions
-# needed by Sam's clock and that needed by Max's one. 
+# needed by Sam's clock and that needed by Max's one.
 # ----------------------------------------------------
 # Analysis: brute force
 #            ---0---
