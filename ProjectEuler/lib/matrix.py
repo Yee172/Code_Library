@@ -130,3 +130,10 @@ class Matrix:
     def __ipow__(self, exponent):
         Matrix.__copy(self ** exponent, self)
         return self
+
+    def trace(self):
+        assert(self.row_number == self.column_number)
+        result = sum(self[i][i] for i in range(self.row_number))
+        if Matrix.MODULE:
+            result %= Matrix.MODULE
+        return result

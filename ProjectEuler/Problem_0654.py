@@ -3,7 +3,8 @@
 # elements of the tuple is \leq n.
 # Find T(5000, 1e12) mod 1000000007.
 # ----------------------------------------------------
-# Analysis: Let D(t, m) be the number of m-tuples of positive integers start with t, we get
+# Analysis: Berlekamp-Massey Algorithm
+#           Let D(t, m) be the number of m-tuples of positive integers start with t, we get
 #              D(1, m) = D(1, m - 1) + \cdots + D(n - 4, m - 1) + D(n - 3, m - 1) + D(n - 2, m - 1)
 #              D(2, m) = D(1, m - 1) + \cdots + D(n - 4, m - 1) + D(n - 3, m - 1)
 #              D(3, m) = D(1, m - 1) + \cdots + D(n - 4, m - 1)
