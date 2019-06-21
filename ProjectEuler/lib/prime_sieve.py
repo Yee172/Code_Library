@@ -11,6 +11,8 @@ def prime_sieve(MAXN=10 ** 7, only_prime=True, info=True, **kwargs):
         **kwargs {[type]} -- [description]
             raw_is_prime {bool} -- when only_prime is False, this argument determines whether
                                    return the raw is_prime list of the faster way (default: {False})
+            function_is_prime {bool} -- when only_prime is False, this argument determines whether
+                                        return the prime test function that can test up to MAXN ** 2
     
     Keyword Arguments:
         MAXN {int} -- upper bound (default: {10 ** 7})
@@ -20,6 +22,8 @@ def prime_sieve(MAXN=10 ** 7, only_prime=True, info=True, **kwargs):
     Returns:
         list -- a list of prime with index up to MAXN
     """
+    function_is_prime = kwargs.get('function_is_prime', False)
+
     if info:
         print('Sieving prime numbers...')
 
@@ -37,8 +41,12 @@ def prime_sieve(MAXN=10 ** 7, only_prime=True, info=True, **kwargs):
         prime = [2] + [i * 2 + 1 for i in is_prime.search(bitarray([1]))]
 
         if not only_prime:
-            if not kwargs.get('raw_is_prime', False):
-                is_prime = [bool(i & 1 and is_prime[i - 1 >> 1]) for i in range(MAXN)]
+            if function_is_prime:
+                def naive_is_prime(n):
+                    return bool(n & 1 and is_prime[n >> 1]) or n == 2
+
+            elif not kwargs.get('raw_is_prime', False):
+                is_prime = [bool(i & 1 and is_prime[i >> 1]) for i in range(MAXN)]
                 is_prime[2] = True
     except:
         if info:
@@ -57,6 +65,10 @@ def prime_sieve(MAXN=10 ** 7, only_prime=True, info=True, **kwargs):
                 is_prime[i * x] = False
                 if not i % x:
                     break
+
+        if not only_prime and function_is_prime:
+            def naive_is_prime(n):
+                return is_prime[n]
     
     if info:
         print('Prime number generated successfully.')
@@ -64,4 +76,17 @@ def prime_sieve(MAXN=10 ** 7, only_prime=True, info=True, **kwargs):
     if only_prime:
         return prime
     else:
-        return is_prime, prime
+        if function_is_prime:
+            def check_is_prime(n):
+                if n < MAXN:
+                    return naive_is_prime(n)
+                for p in prime:
+                    if p * p > n:
+                        break
+                    if not n % p:
+                        return False
+                return True
+
+            return check_is_prime, prime
+        else:
+            return is_prime, prime
