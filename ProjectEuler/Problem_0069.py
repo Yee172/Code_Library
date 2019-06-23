@@ -4,22 +4,9 @@
 # Analysis: brute force
 #           Obviously, it is better for n to have more distinct factors
 
-print('Sieving prime numbers...')
-MAXN = 10 ** 3
-prime = []
-vis = [False] * MAXN
-vis[0] = True
-vis[1] = True
-for i in range(2, MAXN):
-    if not vis[i]:
-        prime.append(i)
-    for x in prime:
-        if i * x >= MAXN:
-            break
-        vis[i * x] = True
-        if not i % x:
-            break
-print('Prime number generated successfully.')
+from lib.prime_sieve import prime_sieve
+
+prime = prime_sieve(10 ** 3)
 
 MAXN = 10 ** 6
 res = 1

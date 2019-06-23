@@ -3,7 +3,8 @@
 # and D = |P_{k} − P_{j}| is minimised.
 # What is the value of D?
 # ----------------------------------------------------
-# Analysis: Assume P[j] + P[k] = P[l]
+# Analysis: brute force
+#           Assume P[j] + P[k] = P[l]
 #              and P[j] - P[k] = P[i]
 #           Then,  2 * P[j] = P[l] + P[i]
 #              and 2 * P[k] = P[l] - P[i]

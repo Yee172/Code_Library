@@ -13,30 +13,17 @@
 # Analysis: brute force
 
 from itertools import combinations, permutations, product
+from lib.prime_sieve import prime_sieve
 
-print('Sieving prime numbers...')
 MAXN = 10000
-prime = []
-vis = [False] * MAXN
-vis[0] = True
-vis[1] = True
-for i in range(2, MAXN):
-    if not vis[i]:
-        prime.append(i)
-    for x in prime:
-        if i * x >= MAXN:
-            break
-        vis[i * x] = True
-        if not i % x:
-            break
-print('Prime number generated successfully.')
+is_prime, prime = prime_sieve(MAXN, False, function_is_prime=True)
 
 res = set()
 for c in product(*(['0123456789'] * 4)):
     possible = []
     for p in permutations(c):
         p = int(''.join(p))
-        if not vis[p] and p > 999:
+        if is_prime(p) and p > 999:
             possible.append(p)
     possible = sorted(list(set(possible)))
     if len(possible) < 3:

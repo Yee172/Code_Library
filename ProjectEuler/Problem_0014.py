@@ -1,7 +1,7 @@
 # Which starting number, under one million,
 # produces the longest chain of Collatz Problem?
 # ----------------------------------------------------
-# Analysis: dfs
+# Analysis: brute force
 
 from collections import defaultdict
 

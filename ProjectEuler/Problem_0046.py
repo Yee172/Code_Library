@@ -3,29 +3,17 @@
 # ----------------------------------------------------
 # Analysis: brute force
 
-print('Sieving prime numbers...')
+from lib.prime_sieve import prime_sieve
+
 MAXN = 20000
-prime = []
-vis = [False] * MAXN
-vis[0] = True
-vis[1] = True
-for i in range(2, MAXN):
-    if not vis[i]:
-        prime.append(i)
-    for x in prime:
-        if i * x >= MAXN:
-            break
-        vis[i * x] = True
-        if not i % x:
-            break
-print('Prime number generated successfully.')
+not_visited, prime = prime_sieve(MAXN, False)
 
 for p in prime[1:]:
     t = 1
     p += 2
     while p < MAXN:
-        vis[p] = False
+        not_visited[p] = True
         t += 1
         p += 4 * t - 2
 
-print(min(x for x in range(3, MAXN, 2) if vis[x]))
+print(min(x for x in range(3, MAXN, 2) if not not_visited[x]))

@@ -11,7 +11,7 @@ def find(x):
     n = int((x << 1) ** .5)
     return n * (n + 1) >> 1 == x
 
-def get_ans():
+def get_res():
     n = 1
     cnt = 0
     while cnt < 3:
@@ -21,4 +21,4 @@ def get_ans():
             cnt += 1
         n += 1
 
-get_ans()
+get_res()

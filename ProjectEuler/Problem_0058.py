@@ -4,32 +4,10 @@
 # ----------------------------------------------------
 # Analysis: brute force
 
-print('Sieving prime numbers...')
-MAXN = 10 ** 6
-prime = []
-vis = [False] * MAXN
-vis[0] = True
-vis[1] = True
-for i in range(2, MAXN):
-    if not vis[i]:
-        prime.append(i)
-    for x in prime:
-        if i * x >= MAXN:
-            break
-        vis[i * x] = True
-        if not i % x:
-            break
-print('Prime number generated successfully.')
+from lib.prime_sieve import prime_sieve
 
-def is_prime(n):
-    if n < MAXN:
-        return not vis[n]
-    for p in prime:
-        if p ** 2 > n:
-            break
-        if not n % p:
-            return False
-    return True
+MAXN = 10 ** 6
+is_prime, _ = prime_sieve(MAXN, False, function_is_prime=True)
 
 side_length = 3
 right_bottom_number = 9

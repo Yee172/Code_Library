@@ -1,6 +1,6 @@
 # What is the 10001st prime number?
 # ----------------------------------------------------
-# Analysis: Euler sieve
+# Analysis: brute force
 
 from lib.prime_sieve import prime_sieve
 

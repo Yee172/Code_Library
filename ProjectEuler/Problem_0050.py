@@ -3,22 +3,10 @@
 # ----------------------------------------------------
 # Analysis: brute force
 
-print('Sieving prime numbers...')
+from lib.prime_sieve import prime_sieve
+
 MAXN = 1000000
-prime = []
-vis = [False] * MAXN
-vis[0] = True
-vis[1] = True
-for i in range(2, MAXN):
-    if not vis[i]:
-        prime.append(i)
-    for x in prime:
-        if i * x >= MAXN:
-            break
-        vis[i * x] = True
-        if not i % x:
-            break
-print('Prime number generated successfully.')
+is_prime, prime = prime_sieve(MAXN, False, function_is_prime=True)
 
 prefix_sum = [0]
 
@@ -31,7 +19,7 @@ def get_res():
             x = prefix_sum[j + i] - prefix_sum[j]
             if x >= MAXN:
                 break
-            if not vis[x]:
+            if is_prime(x):
                 return print(x, 'contains', i, 'terms')
 
 get_res()

@@ -3,7 +3,8 @@
 # What is the largest n-digit pandigital prime
 # that exists?
 # ----------------------------------------------------
-# Analysis: \sum_{n = 1}^{9} n = 45
+# Analysis: brute force
+#           \sum_{n = 1}^{9} n = 45
 #              => 9-digit number is divisible by 3
 #           \sum_{n = 1}^{8} n = 36
 #              => 8-digit number is divisible by 3
@@ -14,33 +15,10 @@
 #           brute force the remaining
 
 from itertools import permutations
+from lib.prime_sieve import prime_sieve
 
-print('Sieving prime numbers...')
-MAXN = 100000
-prime = []
-vis = [False] * MAXN
-vis[0] = True
-vis[1] = True
-for i in range(2, MAXN):
-    if not vis[i]:
-        prime.append(i)
-    for x in prime:
-        if i * x >= MAXN:
-            break
-        vis[i * x] = True
-        if not i % x:
-            break
-print('Prime number generated successfully.')
-
-def is_prime(n):
-    if n < MAXN:
-        return not vis[n]
-    for p in prime:
-        if p ** 2 > n:
-            break
-        if not n % p:
-            return False
-    return True
+MAXN = 10 ** 5
+is_prime, _ = prime_sieve(MAXN, False, function_is_prime=True)
 
 res = 0
 for k in [4, 7]:

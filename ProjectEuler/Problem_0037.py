@@ -3,31 +3,19 @@
 # ----------------------------------------------------
 # Analysis: brute force
 
-print('Sieving prime numbers...')
+from lib.prime_sieve import prime_sieve
+
 MAXN = 10 ** 6
-prime = []
-vis = [False] * MAXN
-vis[0] = True
-vis[1] = True
-for i in range(2, MAXN):
-    if not vis[i]:
-        prime.append(i)
-    for x in prime:
-        if i * x >= MAXN:
-            break
-        vis[i * x] = True
-        if not i % x:
-            break
-print('Prime number generated successfully.')
+is_prime, _ = prime_sieve(MAXN, False, function_is_prime=True)
 
 def is_truncatable(x):
     s = str(x)
-    if vis[int(s)]:
+    if not is_prime(int(s)):
         return False
     for i in range(1, len(s)):
-        if vis[int(s[i:])]:
+        if not is_prime(int(s[i:])):
             return False
-        if vis[int(s[:-i])]:
+        if not is_prime(int(s[:-i])):
             return False
     return True
 

@@ -6,26 +6,14 @@
 from lib.prime_sieve import prime_sieve
 
 MAXN = 10 ** 4
-is_prime, prime = prime_sieve(MAXN, False, raw_is_prime=True)
-
-def is_prime_number(n):
-    if n == 2:
-        return True
-    if n < MAXN:
-        return bool(n & 1 and is_prime[n - 1 >> 1])
-    for p in prime:
-        if p * p > n:
-            break
-        if not n % p:
-            return False
-    return True
+is_prime, prime = prime_sieve(MAXN, False, function_is_prime=True)
 
 def check(x, y):
     n, x = x, y
     while x:
         n *= 10
         x //= 10
-    return is_prime_number(n + y)
+    return is_prime(n + y)
 
 l = len(prime)
 
