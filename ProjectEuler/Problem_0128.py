@@ -36,19 +36,7 @@
 from lib.prime_sieve import prime_sieve
 
 MAXN = 10 ** 6
-is_prime, prime = prime_sieve(MAXN, False, raw_is_prime=True)
-
-def is_prime_number(n):
-    if n == 2:
-        return True
-    if n < MAXN:
-        return bool(n & 1 and is_prime[n - 1 >> 1])
-    for p in prime:
-        if p * p > n:
-            break
-        if not n % p:
-            return False
-    return True
+is_prime, prime = prime_sieve(MAXN, False, function_is_prime=True)
 
 def layer_to_upper_bound(n):
     return 3 * (n + 1) * n + 1
@@ -91,7 +79,7 @@ def PD(x):
         return 3
     count = 0
     for y in get_neighborhood(x):
-        if is_prime_number(abs(y - x)):
+        if is_prime(abs(y - x)):
             count += 1
     return count
 

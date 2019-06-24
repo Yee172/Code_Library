@@ -16,20 +16,11 @@ target = 10
 at_least = 10 ** (target - 1) - 1
 base = int('1' * target)
 MAXN = int(10 ** (target / 2)) + 1
-is_prime, prime = prime_sieve(MAXN, False, raw_is_prime=True)
-
-def check_is_prime(n):
-    if n < MAXN:
-        return is_prime[n >> 1] or n == 2
-    for p in prime:
-        if not n % p:
-            return False
-    else:
-        return True
+is_prime, prime = prime_sieve(MAXN, False, function_is_prime=True)
 
 def dfs(n, i, largest_missing_index, missing_remain):
     if not missing_remain:
-        return n if n > at_least and check_is_prime(n) else 0
+        return n if n > at_least and is_prime(n) else 0
     res = 0
     for p in range(largest_missing_index + 1, target - missing_remain + 1):
         for j in range(10):
