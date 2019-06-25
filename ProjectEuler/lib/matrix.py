@@ -90,19 +90,19 @@ class Matrix:
         return result
 
     def __mul__(self, another):
-        assert((self.row_number, self.column_number) == (another.column_number, another.row_number))
-        result = Matrix(self.row_number)
+        assert(self.column_number == another.row_number)
+        result = Matrix(self.row_number, another.column_number)
         if Matrix.PURE_INTEGER:
             for i in range(self.row_number):
                 for k in range(self.column_number):
                     if self[i][k]:
-                        for j in range(self.row_number):
+                        for j in range(another.column_number):
                             result[i][j] += self[i][k] * another[k][j]
         else:
             for i in range(self.row_number):
                 for k in range(self.column_number):
                     if Matrix.__sign(self[i][k]):
-                        for j in range(self.row_number):
+                        for j in range(another.column_number):
                             result[i][j] += self[i][k] * another[k][j]
         if Matrix.MODULE:
             result %= Matrix.MODULE
