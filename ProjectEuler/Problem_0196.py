@@ -21,7 +21,7 @@
 # Analysis: brute force
 
 import numpy as np
-from ProjectEuler.lib.prime_sieve import prime_sieve
+from lib.prime_sieve import prime_sieve
 
 MAXN = 6 * 10 ** 6
 prime = prime_sieve(MAXN)
