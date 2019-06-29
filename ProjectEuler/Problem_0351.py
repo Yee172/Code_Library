@@ -16,7 +16,7 @@
 # in a hexagonal orchard of order n.
 # Find H(100000000).
 # ----------------------------------------------------
-# Analysis: Dujiao sieve
+# Analysis: sieve of Dujiao
 #           Hint: Take one sixth of the hexagon
 #                              .
 #                            .  .
