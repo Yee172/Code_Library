@@ -17,23 +17,11 @@ from lib.prime_sieve import prime_sieve
 
 MAXN = 10 ** 7
 M = 14
-is_prime, prime = prime_sieve(MAXN, False, raw_is_prime=True)
+is_prime, prime = prime_sieve(MAXN, False, function_is_prime=True)
 
 def is_Harshad_number(n):
     s = sum(map(int, str(n)))
     return False if n % s else s
-
-def is_prime_number(n):
-    if n == 2:
-        return True
-    if n < MAXN:
-        return bool(n & 1 and is_prime[n - 1 >> 1])
-    for p in prime:
-        if p * p > n:
-            break
-        if not n % p:
-            return False
-    return True
 
 res = 0
 
@@ -48,14 +36,14 @@ for i in range(M - 2):
             s = is_Harshad_number(y)
             if s:
                 new_truncatable_Harshad_number.append(y)
-                if is_prime_number(y // s):
+                if is_prime(y // s):
                     strong_Harshad_number.append(y)
     truncatable_Harshad_number = new_truncatable_Harshad_number
     for x in strong_Harshad_number:
         x *= 10
         for i in [1, 3, 7, 9]:
             y = x + i
-            if is_prime_number(y):
+            if is_prime(y):
                 res += y
 
 print(res)
