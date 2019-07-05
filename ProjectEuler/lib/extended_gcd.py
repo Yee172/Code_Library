@@ -1,5 +1,5 @@
-def extend_gcd(a, b, d, x, y):
-    """Extend gcd
+def extended_gcd(a, b, d, x, y):
+    """Extended gcd
     
     a x + b y = d = gcd(x, y)
     
@@ -15,7 +15,7 @@ def extend_gcd(a, b, d, x, y):
         x[0] = 1
         y[0] = 0
     else:
-        extend_gcd(b, a % b, d, y, x)
+        extended_gcd(b, a % b, d, y, x)
         y[0] -= x[0] * (a // b)
 
 def inverse(n, modulo):
@@ -31,5 +31,5 @@ def inverse(n, modulo):
         int -- inverse of n
     """
     d, x, y = [0], [0], [0]
-    extend_gcd(n, modulo, d, x, y)
+    extended_gcd(n, modulo, d, x, y)
     return x[0] % modulo
