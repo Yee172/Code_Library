@@ -1,5 +1,4 @@
 from extended_gcd import inverse
-from context_manager_lib import timer
 
 class LinearRecursion:
     '''linear recursion
@@ -9,64 +8,12 @@ class LinearRecursion:
     Variables:
         EPS {number} -- epsilon
     '''
-    class Polynomial:
-        '''polynomial
-        
-        specific polynomial class set for the linear recursion
-        '''
-
-        RECURSION = []
-        MODULO = 0
-
-        def __init__(self, polynomial):
-            self.polynomial = polynomial
-            self.n = len(polynomial)
-
-        def __getitem__(self, item):
-            return self.polynomial[item]
-
-        def __mul__(self, another):
-            if LinearRecursion.Polynomial.MODULO:
-                return self.__mul_modulo(another)
-            else:
-                return self.__mul_normal(another)
-
-        def __mul_normal(self, another):
-            r = [0] * (self.n + another.n - 1)
-            for i, x in enumerate(self.polynomial):
-                if x:
-                    for j, y in enumerate(another.polynomial):
-                        r[i + j] += x * y
-            for i in range(self.n + another.n - 2, self.n - 1, -1):
-                if r[i]:
-                    for j in range(self.n - 1, -1, -1):
-                        r[i - j - 1] += r[i] * LinearRecursion.Polynomial.RECURSION[j]
-            return LinearRecursion.Polynomial(r[:self.n])
-
-        def __mul_modulo(self, another):
-            r = [0] * (self.n + another.n - 1)
-            for i, x in enumerate(self.polynomial):
-                if x:
-                    for j, y in enumerate(another.polynomial):
-                        r[i + j] += x * y
-                        r[i + j] %= LinearRecursion.Polynomial.MODULO
-            for i in range(self.n + another.n - 2, self.n - 1, -1):
-                if r[i]:
-                    for j in range(self.n - 1, -1, -1):
-                        r[i - j - 1] += r[i] * LinearRecursion.Polynomial.RECURSION[j]
-                        r[i - j - 1] %= LinearRecursion.Polynomial.MODULO
-            return LinearRecursion.Polynomial(r[:self.n])
-
-        def __str__(self):
-            return str(self.polynomial)
-
     EPS = 1e-8
 
     def __init__(self, initial_value, **kwargs):
         self.initial_value = initial_value
         self.recursion = []
         self.modulo = kwargs.get('modulo', 0)
-        self.is_processed = False
 
     def __getitem__(self, item):
         return self.__get_value_by_index(item)
@@ -104,7 +51,6 @@ class LinearRecursion:
                 fail = i
                 delta = expectation_delta
             self.recursion = change
-        self.is_processed = True
         return self.recursion
 
     def __get_recursion_modulo(self):
@@ -136,29 +82,55 @@ class LinearRecursion:
                 fail = i
                 delta = expectation_delta
             self.recursion = change
-        self.is_processed = True
         return self.recursion
 
+    def __polymul(self, poly1, poly2):
+        if self.modulo:
+            return self.__polymul_modulo(poly1, poly2)
+        else:
+            return self.__polymul_normal(poly1, poly2)
+
+    def __polymul_normal(self, poly1, poly2):
+        r = [0] * (len(poly1) + len(poly2) - 1)
+        for i, x in enumerate(poly1):
+            if x > LinearRecursion.EPS or x < -LinearRecursion.EPS:
+                for j, y in enumerate(poly2):
+                    r[i + j] += x * y
+        for i in range(len(poly1) + len(poly2) - 2, len(poly1) - 1, -1):
+            if r[i] > LinearRecursion.EPS or r[i] < -LinearRecursion.EPS:
+                for j in range(len(poly1) - 1, -1, -1):
+                    r[i - j - 1] += r[i] * self.recursion[j]
+        return r[:len(poly1)]
+
+    def __polymul_modulo(self, poly1, poly2):
+        r = [0] * (len(poly1) + len(poly2) - 1)
+        for i, x in enumerate(poly1):
+            if x:
+                for j, y in enumerate(poly2):
+                    r[i + j] += x * y
+                    r[i + j] %= self.modulo
+        for i in range(len(poly1) + len(poly2) - 2, len(poly1) - 1, -1):
+            if r[i]:
+                for j in range(len(poly1) - 1, -1, -1):
+                    r[i - j - 1] += r[i] * self.recursion[j]
+                    r[i - j - 1] %= self.modulo
+        return r[:len(poly1)]
+
     def __get_value_by_index(self, index):
-        if not self.is_processed:
+        if not len(self.recursion):
             self.get_recursion()
-        n = len(self.recursion)
-        r, t = [0] * n, [0] * n
+        length = len(self.recursion)
+        r, t = [0] * length, [0] * length
         r[0] = 1
-        if n == 1:
-            t[0] = R[0]
+        if length == 1:
+            t[0] = self.recursion[0]
         else:
             t[1] = 1
-        LinearRecursion.Polynomial.RECURSION = self.recursion
-        LinearRecursion.Polynomial.MODULO = self.modulo
-        with timer():
-            r, t = LinearRecursion.Polynomial(r), LinearRecursion.Polynomial(t)
-            while index:
-                print(index)
-                if index & 1:
-                    r *= t
-                t *= t
-                index >>= 1
+        while index:
+            if index & 1:
+                r = self.__polymul(r, t)
+            t = self.__polymul(t, t)
+            index >>= 1
         result = sum(map(lambda i: r[i] * self.initial_value[i], range(len(self.recursion))))
         if self.modulo:
             result %= self.modulo
