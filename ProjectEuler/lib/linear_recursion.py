@@ -10,8 +10,8 @@ class LinearRecursion:
     '''
     EPS = 1e-8
 
-    def __init__(self, initial_value, **kwargs):
-        self.initial_value = initial_value
+    def __init__(self, initial_values, **kwargs):
+        self.initial_values = initial_values
         self.recursion = []
         self.modulo = kwargs.get('modulo', 0)
 
@@ -26,10 +26,10 @@ class LinearRecursion:
 
     def __get_recursion_normal(self):
         last_fail_state = []
-        for i in range(len(self.initial_value)):
-            expectation_delta = -self.initial_value[i]
+        for i in range(len(self.initial_values)):
+            expectation_delta = -self.initial_values[i]
             for j, r in enumerate(self.recursion):
-                expectation_delta += self.initial_value[i - j - 1] * r
+                expectation_delta += self.initial_values[i - j - 1] * r
             if -LinearRecursion.EPS < expectation_delta < LinearRecursion.EPS:
                 continue
             if not len(self.recursion):
@@ -55,10 +55,10 @@ class LinearRecursion:
 
     def __get_recursion_modulo(self):
         last_fail_state = []
-        for i in range(len(self.initial_value)):
-            expectation_delta = -self.initial_value[i] % self.modulo
+        for i in range(len(self.initial_values)):
+            expectation_delta = -self.initial_values[i] % self.modulo
             for j, r in enumerate(self.recursion):
-                expectation_delta += self.initial_value[i - j - 1] * r
+                expectation_delta += self.initial_values[i - j - 1] * r
                 expectation_delta %= self.modulo
             if not expectation_delta:
                 continue
@@ -131,7 +131,7 @@ class LinearRecursion:
                 r = self.__polymul(r, t)
             t = self.__polymul(t, t)
             index >>= 1
-        result = sum(map(lambda i: r[i] * self.initial_value[i], range(len(self.recursion))))
+        result = sum(map(lambda i: r[i] * self.initial_values[i], range(len(self.recursion))))
         if self.modulo:
             result %= self.modulo
         return result
